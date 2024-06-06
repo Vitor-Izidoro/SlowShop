@@ -1,0 +1,38 @@
+
+CREATE TABLE `fornecedor` (
+  `NomeFantasia` varchar(145) NOT NULL,
+  `RazaoSocial` varchar(145) NOT NULL,
+  `CNPJ` varchar(145) NOT NULL,
+  `email` varchar(145) NOT NULL,
+  `telefone` int NOT NULL,
+  `cidade` varchar(145) NOT NULL,
+  `pais` varchar(145) NOT NULL,
+  `endereco` varchar(145) NOT NULL,
+  `dataCadastr` varchar(145) NOT NULL,
+  `senha` varchar(145) NOT NULL,
+  `fornecedorcol` varchar(45) NOT NULL,
+  PRIMARY KEY (`NomeFantasia`)
+) 
+CREATE TABLE `pessoa` (
+  `nome` varchar(145) NOT NULL,
+  `sobrenome` varchar(145) NOT NULL,
+  `dataNascimento` varchar(145) NOT NULL,
+  `telefone` int NOT NULL,
+  `cpf` int NOT NULL,
+  `cidade` varchar(45) NOT NULL,
+  `estado` varchar(45) NOT NULL,
+  `pais` varchar(45) NOT NULL,
+  `endereco` varchar(145) NOT NULL,
+  `numero` int NOT NULL,
+  `email` varchar(145) NOT NULL,
+  `senha` varchar(145) NOT NULL,
+  `dataCadastro` varchar(145) NOT NULL,
+  `pessoacol` varchar(45) NOT NULL,
+  PRIMARY KEY (`nome`)
+) 
+CREATE TABLE `admin` (
+  `nome` varchar(145) NOT NULL,
+  `email` varchar(145) NOT NULL,
+  `senha` varchar(145) NOT NULL,
+  PRIMARY KEY (`nome`)
+) 
