@@ -1,5 +1,6 @@
 package dao;
 
+import models.Cliente;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -9,23 +10,31 @@ public class ClienteDAO {
     private String query;
     private PreparedStatement ps;
 
-    public ClienteDAO(){
+    public ClienteDAO() {
         conexao = Conexao.getConexao();
     }
 
-    public void inserirCliente(){
-
-        this.query = "INSERT INTO cliente (nome,senha) VALUES (?,?)";
+    public void inserirCliente(Cliente cliente) {
+        this.query = "INSERT INTO pessoa (nome, sobrenome, dataNascimento, telefone, cpf, cidade, estado, pais, endereco, numero, email, senha, dataCadastro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             this.ps = conexao.getConnection().prepareStatement(this.query);
-            this.ps.setString(1, "vitor03");
-            this.ps.setString(2, "aaaaa");
+            this.ps.setString(1, cliente.getNome());
+            this.ps.setString(2, cliente.getSobrenome());
+            this.ps.setString(3, cliente.getDataNascimento());
+            this.ps.setString(4, cliente.getTelefone());
+            this.ps.setString(5, cliente.getCpf());
+            this.ps.setString(6, cliente.getCidade());
+            this.ps.setString(7, cliente.getEstado());
+            this.ps.setString(8, cliente.getPais());
+            this.ps.setString(9, cliente.getEndereco());
+            this.ps.setString(10, cliente.getNumero());
+            this.ps.setString(11, cliente.getEmail());
+            this.ps.setString(12, cliente.getSenha());
+            this.ps.setString(13, cliente.getDataCadastro());
             this.ps.executeUpdate();
             this.ps.close();
-        }
-        catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
     }
 }

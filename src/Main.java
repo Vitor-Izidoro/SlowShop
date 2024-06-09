@@ -1,6 +1,8 @@
 import dao.AdminDAO;
 import dao.ClienteDAO;
 import models.Admin;
+import models.Cliente;
+
 import java.util.Scanner;
 
 public class Main {
@@ -47,9 +49,37 @@ public class Main {
                         System.out.println("Cadastro de Vendedor ainda não implementado.");
                         break;
                     case 3:
-                        // Implementar cadastro de cliente
+                        System.out.print("Nome: ");
+                        String nome = sc.nextLine();
+                        System.out.print("Sobrenome: ");
+                        String sobrenome = sc.nextLine();
+                        System.out.print("Data de Nascimento: ");
+                        String dataNascimento = sc.nextLine();
+                        System.out.print("Telefone: ");
+                        String telefone = sc.nextLine();
+                        System.out.print("CPF: ");
+                        String cpf = sc.nextLine();
+                        System.out.print("Cidade: ");
+                        String cidade = sc.nextLine();
+                        System.out.print("Estado: ");
+                        String estado = sc.nextLine();
+                        System.out.print("País: ");
+                        String pais = sc.nextLine();
+                        System.out.print("Endereço: ");
+                        String endereco = sc.nextLine();
+                        System.out.print("Número: ");
+                        String numero = sc.nextLine();
+                        System.out.print("Email: ");
+                        String emailCliente = sc.nextLine();
+                        System.out.print("Senha: ");
+                        String senhaCliente = sc.nextLine();
+                        System.out.print("Data de Cadastro: ");
+                        String dataCadastro = sc.nextLine();
+
+                        Cliente cliente = new Cliente(nome, sobrenome, dataNascimento, telefone, cpf, cidade, estado, pais, endereco, numero, emailCliente, senhaCliente, dataCadastro);
                         ClienteDAO cDAO = new ClienteDAO();
-                        cDAO.inserirCliente();
+                        cDAO.inserirCliente(cliente);
+                        System.out.println("Cliente cadastrado com sucesso!");
                         break;
                     case 4:
                         // Implementar cadastro de fornecedor
