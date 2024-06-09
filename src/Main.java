@@ -1,12 +1,18 @@
 import dao.AdminDAO;
 import dao.ClienteDAO;
+import dao.VendedorDAO;
+import dao.FornecedorDAO;
+import dao.ProdutoDAO;
 import models.Admin;
+import models.Vendedor;
 import models.Cliente;
-
+import models.Fornecedor;
+import models.Produto;
 import java.util.Scanner;
 
 public class Main {
     private static boolean isAdmin = false;
+    private static boolean isLoggedIn = false;
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -14,6 +20,10 @@ public class Main {
         String email = sc.nextLine();
         System.out.print("Senha: ");
         String senha = sc.nextLine();
+
+        // Verifique se o usuário é admin e está logado
+        // isAdmin = verificarAdmin(email, senha);
+        // isLoggedIn = verificarLogin(email, senha);
 
         int opcaoMenu = 0;
         while (true) {
@@ -45,53 +55,123 @@ public class Main {
                         System.out.println("Admin cadastrado com sucesso!");
                         break;
                     case 2:
-                        // Implementar cadastro de vendedor
-                        System.out.println("Cadastro de Vendedor ainda não implementado.");
+                        if (isAdmin) {
+                            System.out.print("Nome: ");
+                            String nome = sc.nextLine();
+                            System.out.print("Sobrenome: ");
+                            String sobrenome = sc.nextLine();
+                            System.out.print("Data de Nascimento: ");
+                            String dataNascimento = sc.nextLine();
+                            System.out.print("Telefone: ");
+                            String telefone = sc.nextLine();
+                            System.out.print("CPF: ");
+                            String cpf = sc.nextLine();
+                            System.out.print("Cidade: ");
+                            String cidade = sc.nextLine();
+                            System.out.print("Estado: ");
+                            String estado = sc.nextLine();
+                            System.out.print("País: ");
+                            String pais = sc.nextLine();
+                            System.out.print("Endereço: ");
+                            String endereco = sc.nextLine();
+                            System.out.print("Data de Cadastro: ");
+                            String dataCadastro = sc.nextLine();
+                            System.out.print("Email: ");
+                            String emailVendedor = sc.nextLine();
+                            System.out.print("Senha: ");
+                            String senhaVendedor = sc.nextLine();
+
+                            Vendedor vendedor = new Vendedor(nome, sobrenome, dataNascimento, telefone, cpf, cidade, estado, pais, endereco, dataCadastro, emailVendedor, senhaVendedor);
+                            VendedorDAO vDao = new VendedorDAO();
+                            vDao.inserirVendedor(vendedor);
+                            System.out.println("Vendedor cadastrado com sucesso!");
+                        } else {
+                            System.out.println("Apenas admin pode adicionar vendedores.");
+                        }
                         break;
                     case 3:
                         System.out.print("Nome: ");
-                        String nome = sc.nextLine();
+                        String nomeCliente = sc.nextLine();
                         System.out.print("Sobrenome: ");
-                        String sobrenome = sc.nextLine();
+                        String sobrenomeCliente = sc.nextLine();
                         System.out.print("Data de Nascimento: ");
-                        String dataNascimento = sc.nextLine();
+                        String dataNascimentoCliente = sc.nextLine();
                         System.out.print("Telefone: ");
-                        String telefone = sc.nextLine();
+                        String telefoneCliente = sc.nextLine();
                         System.out.print("CPF: ");
-                        String cpf = sc.nextLine();
+                        String cpfCliente = sc.nextLine();
                         System.out.print("Cidade: ");
-                        String cidade = sc.nextLine();
+                        String cidadeCliente = sc.nextLine();
                         System.out.print("Estado: ");
-                        String estado = sc.nextLine();
+                        String estadoCliente = sc.nextLine();
                         System.out.print("País: ");
-                        String pais = sc.nextLine();
+                        String paisCliente = sc.nextLine();
                         System.out.print("Endereço: ");
-                        String endereco = sc.nextLine();
+                        String enderecoCliente = sc.nextLine();
                         System.out.print("Número: ");
-                        String numero = sc.nextLine();
+                        String numeroCliente = sc.nextLine();
                         System.out.print("Email: ");
                         String emailCliente = sc.nextLine();
                         System.out.print("Senha: ");
                         String senhaCliente = sc.nextLine();
                         System.out.print("Data de Cadastro: ");
-                        String dataCadastro = sc.nextLine();
+                        String dataCadastroCliente = sc.nextLine();
 
-                        Cliente cliente = new Cliente(nome, sobrenome, dataNascimento, telefone, cpf, cidade, estado, pais, endereco, numero, emailCliente, senhaCliente, dataCadastro);
-                        ClienteDAO cDAO = new ClienteDAO();
-                        cDAO.inserirCliente(cliente);
+                        Cliente cliente = new Cliente(nomeCliente, sobrenomeCliente, dataNascimentoCliente, telefoneCliente, cpfCliente, cidadeCliente, estadoCliente, paisCliente, enderecoCliente, numeroCliente, emailCliente, senhaCliente, dataCadastroCliente);
+                        ClienteDAO cDao = new ClienteDAO();
+                        cDao.inserirCliente(cliente);
                         System.out.println("Cliente cadastrado com sucesso!");
                         break;
                     case 4:
-                        // Implementar cadastro de fornecedor
-                        System.out.println("Cadastro de Fornecedor ainda não implementado.");
+                        System.out.print("Nome Fantasia: ");
+                        String nomeFantasia = sc.nextLine();
+                        System.out.print("Razão Social: ");
+                        String razaoSocial = sc.nextLine();
+                        System.out.print("CNPJ: ");
+                        String cnpj = sc.nextLine();
+                        System.out.print("Email: ");
+                        String emailFornecedor = sc.nextLine();
+                        System.out.print("Telefone: ");
+                        String telefoneFornecedor = sc.nextLine();
+                        System.out.print("Cidade: ");
+                        String cidadeFornecedor = sc.nextLine();
+                        System.out.print("Estado: ");
+                        String estadoFornecedor = sc.nextLine();
+                        System.out.print("País: ");
+                        String paisFornecedor = sc.nextLine();
+                        System.out.print("Endereço: ");
+                        String enderecoFornecedor = sc.nextLine();
+                        System.out.print("Número: ");
+                        String numeroFornecedor = sc.nextLine();
+                        System.out.print("Data de Cadastro: ");
+                        String dataCadastroFornecedor = sc.nextLine();
+
+                        Fornecedor fornecedor = new Fornecedor(nomeFantasia, razaoSocial, cnpj, emailFornecedor, telefoneFornecedor, cidadeFornecedor, estadoFornecedor, paisFornecedor, enderecoFornecedor, numeroFornecedor, dataCadastroFornecedor);
+                        FornecedorDAO fDao = new FornecedorDAO();
+                        fDao.inserirFornecedor(fornecedor);
+                        System.out.println("Fornecedor cadastrado com sucesso!");
                         break;
                     case 5:
-                        // Implementar cadastro de produto
-                        System.out.println("Cadastro de Produto ainda não implementado.");
+                        System.out.print("Descrição: ");
+                        String descricao = sc.nextLine();
+                        System.out.print("Quantidade: ");
+                        int quantidade = sc.nextInt();
+                        sc.nextLine(); // Consume the newline character
+                        System.out.print("Preço: ");
+                        double preco = sc.nextDouble();
+                        sc.nextLine(); // Consume the newline character
+                        System.out.print("Fornecedor (ID): ");
+                        int fornecedorId = sc.nextInt();
+                        sc.nextLine(); // Consume the newline character
+
+                        Produto produto = new Produto(descricao, quantidade, preco, fornecedorId);
+                        ProdutoDAO pDao = new ProdutoDAO();
+                        pDao.inserirProduto(produto);
+                        System.out.println("Produto cadastrado com sucesso!");
                         break;
                     case 6:
-                        // Implementar listagem de vendedor
-                        System.out.println("Listagem de Vendedor ainda não implementado.");
+                        VendedorDAO vendedorDao = new VendedorDAO();
+                        vendedorDao.listarVendedores();
                         break;
                     case 7:
                         System.out.println("Saindo...");
