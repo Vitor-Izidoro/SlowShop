@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import models.Admin;
 
@@ -11,20 +12,33 @@ public class AdminDAO {
     private PreparedStatement ps;
 
     public AdminDAO() {
-        conexao = Conexao.getConexao();
+        conexao = new Conexao();
     }
 
     public void inserirAdmin(Admin admin) {
-        this.query = "INSERT INTO admin (nome, senha, email) VALUES (?, ?, ?)";
         try {
-            this.ps = conexao.getConnection().prepareStatement(this.query);
-            this.ps.setString(1, admin.getNome());
-            this.ps.setString(2, admin.getSenha());
-            this.ps.setString(3, admin.getEmail());
-            this.ps.executeUpdate();
-            this.ps.close();
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+            query = "INSERT INTO admin (nome, email, senha) VALUES (?, ?, ?)";
+            ps = conexao.getConnection().prepareStatement(query);
+            ps.setString(1, admin.getNome());
+            ps.setString(2, admin.getEmail());
+            ps.setString(3, admin.getSenha());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Erro ao inserir admin: " + e.getMessage());
+        }
+    }
+
+    public boolean verificarAdmin(String email, String senha) {
+        try {
+            query = "SELECT * FROM admin WHERE email = ? AND senha = ?";
+            ps = conexao.getConnection().prepareStatement(query);
+            ps.setString(1, email);
+            ps.setString(2, senha);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.out.println("Erro ao verificar admin: " + e.getMessage());
+            return false;
         }
     }
 }

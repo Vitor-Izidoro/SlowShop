@@ -13,7 +13,7 @@ public class Conexao {
     private static Conexao conexao;
     private Connection conn;
 
-    private Conexao() {
+    public Conexao() {
         this.bdUsuario = "root";
         this.bdSenha = "C0x1nh4123";
         this.bdHost = "jdbc:mysql://127.0.0.1:3306/slowshop?useSSL=false";
