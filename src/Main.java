@@ -8,6 +8,7 @@ import models.Vendedor;
 import models.Cliente;
 import models.Fornecedor;
 import models.Produto;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -171,7 +172,10 @@ public class Main {
                         break;
                     case 6:
                         VendedorDAO vendedorDao = new VendedorDAO();
-                        vendedorDao.listarVendedores();
+                        List<Vendedor> vendedores = vendedorDao.listarVendedores();
+                        for (Vendedor v : vendedores) {
+                            System.out.println(v.getNome() + " " + v.getSobrenome());
+                        }
                         break;
                     case 7:
                         System.out.println("Saindo...");

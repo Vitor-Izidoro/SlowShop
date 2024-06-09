@@ -40,12 +40,12 @@ public class VendedorDAO {
         }
     }
 
-    public void listarVendedores() {
+    public List<Vendedor> listarVendedores() {
         this.query = "SELECT * FROM vendedor";
+        List<Vendedor> vendedores = new ArrayList<>();
         try {
             this.ps = conexao.getConnection().prepareStatement(this.query);
             ResultSet rs = this.ps.executeQuery();
-            List<Vendedor> vendedores = new ArrayList<>();
             while (rs.next()) {
                 Vendedor vendedor = new Vendedor(
                         rs.getString("nome"),
@@ -63,12 +63,11 @@ public class VendedorDAO {
                 );
                 vendedores.add(vendedor);
             }
-            for (Vendedor vendedor : vendedores) {
-                System.out.println(vendedor.getNome() + " " + vendedor.getSobrenome());
-            }
+            rs.close();
             this.ps.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        return vendedores;
     }
 }
