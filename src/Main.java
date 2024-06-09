@@ -1,5 +1,6 @@
 import dao.AdminDAO;
 import dao.ClienteDAO;
+import models.Admin;
 import java.util.Scanner;
 
 public class Main {
@@ -29,9 +30,17 @@ public class Main {
 
                 switch (opcaoMenu) {
                     case 1:
-                        // Implementar cadastro de vendedor
+                        System.out.print("Nome do Admin: ");
+                        String nomeAdmin = sc.nextLine();
+                        System.out.print("Email do Admin: ");
+                        String emailAdmin = sc.nextLine();
+                        System.out.print("Senha do Admin: ");
+                        String senhaAdmin = sc.nextLine();
+
+                        Admin admin = new Admin(nomeAdmin, emailAdmin, senhaAdmin);
                         AdminDAO aDao = new AdminDAO();
-                        aDao.inserirAdmin();
+                        aDao.inserirAdmin(admin);
+                        System.out.println("Admin cadastrado com sucesso!");
                         break;
                     case 2:
                         // Implementar cadastro de vendedor
