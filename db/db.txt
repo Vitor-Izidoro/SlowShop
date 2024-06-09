@@ -1,4 +1,11 @@
+-- Dropar tabelas se existirem
+DROP TABLE IF EXISTS `produto`;
+DROP TABLE IF EXISTS `admin`;
+DROP TABLE IF EXISTS `vendedor`;
+DROP TABLE IF EXISTS `pessoa`;
+DROP TABLE IF EXISTS `fornecedor`;
 
+-- Criar tabela fornecedor
 CREATE TABLE `fornecedor` (
   `NomeFantasia` varchar(145) NOT NULL,
   `RazaoSocial` varchar(145) NOT NULL,
@@ -6,13 +13,16 @@ CREATE TABLE `fornecedor` (
   `email` varchar(145) NOT NULL,
   `telefone` int NOT NULL,
   `cidade` varchar(145) NOT NULL,
+  `estado` varchar(145) NOT NULL,
   `pais` varchar(145) NOT NULL,
   `endereco` varchar(145) NOT NULL,
+  `numero` int NOT NULL,
   `dataCadastr` varchar(145) NOT NULL,
   `senha` varchar(145) NOT NULL,
-  `fornecedorcol` varchar(45) NOT NULL,
   PRIMARY KEY (`NomeFantasia`)
-) 
+);
+
+-- Criar tabela pessoa
 CREATE TABLE `pessoa` (
   `nome` varchar(145) NOT NULL,
   `sobrenome` varchar(145) NOT NULL,
@@ -27,12 +37,41 @@ CREATE TABLE `pessoa` (
   `email` varchar(145) NOT NULL,
   `senha` varchar(145) NOT NULL,
   `dataCadastro` varchar(145) NOT NULL,
-  `pessoacol` varchar(45) NOT NULL,
-  PRIMARY KEY (`nome`)
-) 
+  PRIMARY KEY (`cpf`)
+);
+
+-- Criar tabela vendedor
+CREATE TABLE `vendedor` (
+  `nome` varchar(145) NOT NULL,
+  `sobrenome` varchar(145) NOT NULL,
+  `dataNascimento` varchar(145) NOT NULL,
+  `telefone` int NOT NULL,
+  `cpf` int NOT NULL,
+  `cidade` varchar(45) NOT NULL,
+  `estado` varchar(45) NOT NULL,
+  `pais` varchar(45) NOT NULL,
+  `endereco` varchar(145) NOT NULL,
+  `numero` int NOT NULL,
+  `email` varchar(145) NOT NULL,
+  `senha` varchar(145) NOT NULL,
+  `dataCadastro` varchar(145) NOT NULL,
+  PRIMARY KEY (`cpf`)
+);
+
+-- Criar tabela admin
 CREATE TABLE `admin` (
   `nome` varchar(145) NOT NULL,
   `email` varchar(145) NOT NULL,
   `senha` varchar(145) NOT NULL,
-  PRIMARY KEY (`nome`)
-) 
+  PRIMARY KEY (`email`)
+);
+
+-- Criar tabela produto com chave estrangeira para fornecedor
+CREATE TABLE `produto` (
+  `descricao` varchar(145) NOT NULL,
+  `quantidade` int NOT NULL,
+  `preco` varchar(145) NOT NULL,
+  `fornecedor` varchar(145),
+  PRIMARY KEY (`descricao`),
+  FOREIGN KEY (`fornecedor`) REFERENCES `fornecedor`(`NomeFantasia`)
+);
