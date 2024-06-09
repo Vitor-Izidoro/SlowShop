@@ -33,7 +33,6 @@ CREATE TABLE `fornecedor` (
   `endereco` varchar(145) NOT NULL,
   `dataCadastr` varchar(145) NOT NULL,
   `senha` varchar(145) NOT NULL,
-  `fornecedorcol` varchar(45) NOT NULL,
   PRIMARY KEY (`NomeFantasia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
