@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SlowShop.iml" filepath="$PROJECT_DIR$/SlowShop.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mysqljava.iml" filepath="$PROJECT_DIR$/mysqljava.iml" />
     </modules>
   </component>
 </project>
