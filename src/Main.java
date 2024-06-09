@@ -55,39 +55,38 @@ public class Main {
                         System.out.println("Admin cadastrado com sucesso!");
                         break;
                     case 2:
-                        if (isAdmin) {
-                            System.out.print("Nome: ");
-                            String nome = sc.nextLine();
-                            System.out.print("Sobrenome: ");
-                            String sobrenome = sc.nextLine();
-                            System.out.print("Data de Nascimento: ");
-                            String dataNascimento = sc.nextLine();
-                            System.out.print("Telefone: ");
-                            String telefone = sc.nextLine();
-                            System.out.print("CPF: ");
-                            String cpf = sc.nextLine();
-                            System.out.print("Cidade: ");
-                            String cidade = sc.nextLine();
-                            System.out.print("Estado: ");
-                            String estado = sc.nextLine();
-                            System.out.print("País: ");
-                            String pais = sc.nextLine();
-                            System.out.print("Endereço: ");
-                            String endereco = sc.nextLine();
-                            System.out.print("Data de Cadastro: ");
-                            String dataCadastro = sc.nextLine();
-                            System.out.print("Email: ");
-                            String emailVendedor = sc.nextLine();
-                            System.out.print("Senha: ");
-                            String senhaVendedor = sc.nextLine();
+                        System.out.print("Nome: ");
+                        String nome = sc.nextLine();
+                        System.out.print("Sobrenome: ");
+                        String sobrenome = sc.nextLine();
+                        System.out.print("Data de Nascimento: ");
+                        String dataNascimento = sc.nextLine();
+                        System.out.print("Telefone: ");
+                        String telefone = sc.nextLine();
+                        System.out.print("CPF: ");
+                        String cpf = sc.nextLine();
+                        System.out.print("Cidade: ");
+                        String cidade = sc.nextLine();
+                        System.out.print("Estado: ");
+                        String estado = sc.nextLine();
+                        System.out.print("País: ");
+                        String pais = sc.nextLine();
+                        System.out.print("Endereço: ");
+                        String endereco = sc.nextLine();
+                        System.out.print("Número: "); // Adicione esta linha
+                        int numero = sc.nextInt(); // Adicione esta linha
+                        sc.nextLine(); // Consume the newline character
+                        System.out.print("Data de Cadastro: ");
+                        String dataCadastro = sc.nextLine();
+                        System.out.print("Email: ");
+                        String emailVendedor = sc.nextLine();
+                        System.out.print("Senha: ");
+                        String senhaVendedor = sc.nextLine();
 
-                            Vendedor vendedor = new Vendedor(nome, sobrenome, dataNascimento, telefone, cpf, cidade, estado, pais, endereco, dataCadastro, emailVendedor, senhaVendedor);
-                            VendedorDAO vDao = new VendedorDAO();
-                            vDao.inserirVendedor(vendedor);
-                            System.out.println("Vendedor cadastrado com sucesso!");
-                        } else {
-                            System.out.println("Apenas admin pode adicionar vendedores.");
-                        }
+                        Vendedor vendedor = new Vendedor(nome, sobrenome, dataNascimento, telefone, cpf, cidade, estado, pais, endereco, numero, dataCadastro, emailVendedor, senhaVendedor); // Atualize esta linha
+                        VendedorDAO vDao = new VendedorDAO();
+                        vDao.inserirVendedor(vendedor);
+                        System.out.println("Vendedor cadastrado com sucesso!");
                         break;
                     case 3:
                         System.out.print("Nome: ");
@@ -146,7 +145,7 @@ public class Main {
                         System.out.print("Data de Cadastro: ");
                         String dataCadastroFornecedor = sc.nextLine();
 
-                        Fornecedor fornecedor = new Fornecedor(nomeFantasia, razaoSocial, cnpj, emailFornecedor, telefoneFornecedor, cidadeFornecedor, estadoFornecedor, paisFornecedor, enderecoFornecedor, numeroFornecedor, dataCadastroFornecedor);
+                        Fornecedor fornecedor = new Fornecedor(nomeFantasia, razaoSocial, cnpj, emailFornecedor, telefoneFornecedor, cidadeFornecedor, estadoFornecedor, paisFornecedor, enderecoFornecedor, numeroFornecedor, dataCadastroFornecedor, senha);
                         FornecedorDAO fDao = new FornecedorDAO();
                         fDao.inserirFornecedor(fornecedor);
                         System.out.println("Fornecedor cadastrado com sucesso!");
@@ -160,7 +159,7 @@ public class Main {
                         System.out.print("Preço: ");
                         double preco = sc.nextDouble();
                         sc.nextLine(); // Consume the newline character
-                        System.out.print("Fornecedor (ID): ");
+                        System.out.print("Fornecedor: ");
                         int fornecedorId = sc.nextInt();
                         sc.nextLine(); // Consume the newline character
 

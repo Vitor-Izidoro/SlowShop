@@ -13,8 +13,10 @@ public class Vendedor {
     private String dataCadastro;
     private String email;
     private String senha;
+    private int numero; // Adicione esta linha
 
-    public Vendedor(String nome, String sobrenome, String dataNascimento, String telefone, String cpf, String cidade, String estado, String pais, String endereco, String dataCadastro, String email, String senha) {
+    // Atualize o construtor para incluir o campo numero
+    public Vendedor(String nome, String sobrenome, String dataNascimento, String telefone, String cpf, String cidade, String estado, String pais, String endereco, int numero, String dataCadastro, String email, String senha) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.dataNascimento = dataNascimento;
@@ -24,6 +26,7 @@ public class Vendedor {
         this.estado = estado;
         this.pais = pais;
         this.endereco = endereco;
+        this.numero = numero; // Adicione esta linha
         this.dataCadastro = dataCadastro;
         this.email = email;
         this.senha = senha;
@@ -123,5 +126,12 @@ public class Vendedor {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+    public int getNumero() {
+        return numero;
+    }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 }

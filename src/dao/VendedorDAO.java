@@ -18,7 +18,7 @@ public class VendedorDAO {
     }
 
     public void inserirVendedor(Vendedor vendedor) {
-        this.query = "INSERT INTO vendedor (nome, sobrenome, dataNascimento, telefone, cpf, cidade, estado, pais, endereco, dataCadastro, email, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        this.query = "INSERT INTO vendedor (nome, sobrenome, dataNascimento, telefone, cpf, cidade, estado, pais, endereco, numero, dataCadastro, email, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.ps.setString(1, vendedor.getNome());
@@ -30,15 +30,17 @@ public class VendedorDAO {
             this.ps.setString(7, vendedor.getEstado());
             this.ps.setString(8, vendedor.getPais());
             this.ps.setString(9, vendedor.getEndereco());
-            this.ps.setString(10, vendedor.getDataCadastro());
-            this.ps.setString(11, vendedor.getEmail());
-            this.ps.setString(12, vendedor.getSenha());
+            this.ps.setInt(10, vendedor.getNumero()); // Adicione esta linha
+            this.ps.setString(11, vendedor.getDataCadastro());
+            this.ps.setString(12, vendedor.getEmail());
+            this.ps.setString(13, vendedor.getSenha());
             this.ps.executeUpdate();
             this.ps.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
+
 
     public void listarVendedores() {
         this.query = "SELECT * FROM vendedor";
@@ -57,6 +59,7 @@ public class VendedorDAO {
                         rs.getString("estado"),
                         rs.getString("pais"),
                         rs.getString("endereco"),
+                        rs.getInt("numero"),
                         rs.getString("dataCadastro"),
                         rs.getString("email"),
                         rs.getString("senha")

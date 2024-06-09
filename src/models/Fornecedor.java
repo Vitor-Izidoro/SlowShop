@@ -12,8 +12,10 @@ public class Fornecedor {
     private String endereco;
     private String numero;
     private String dataCadastro;
+    private String senha;
 
-    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, String telefone, String cidade, String estado, String pais, String endereco, String numero, String dataCadastro) {
+
+    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, String telefone, String cidade, String estado, String pais, String endereco, String numero, String dataCadastro, String senha) {
         this.nomeFantasia = nomeFantasia;
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
@@ -25,6 +27,7 @@ public class Fornecedor {
         this.endereco = endereco;
         this.numero = numero;
         this.dataCadastro = dataCadastro;
+        this.senha = senha;
     }
 
     public String getNomeFantasia() {
@@ -113,5 +116,12 @@ public class Fornecedor {
 
     public void setDataCadastro(String dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

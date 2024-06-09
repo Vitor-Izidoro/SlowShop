@@ -15,7 +15,7 @@ public class FornecedorDAO {
     }
 
     public void inserirFornecedor(Fornecedor fornecedor) {
-        this.query = "INSERT INTO fornecedor (nomeFantasia, razaoSocial, cnpj, email, telefone, cidade, estado, pais, endereco, numero, dataCadastro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        this.query = "INSERT INTO fornecedor (nomeFantasia, razaoSocial, cnpj, email, telefone, cidade, estado, pais, endereco, numero, dataCadastro, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.ps.setString(1, fornecedor.getNomeFantasia());
@@ -29,6 +29,7 @@ public class FornecedorDAO {
             this.ps.setString(9, fornecedor.getEndereco());
             this.ps.setString(10, fornecedor.getNumero());
             this.ps.setString(11, fornecedor.getDataCadastro());
+            this.ps.setString(12, fornecedor.getSenha()); // Novo campo
             this.ps.executeUpdate();
             this.ps.close();
         } catch (SQLException ex) {

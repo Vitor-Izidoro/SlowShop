@@ -15,7 +15,7 @@ public class ProdutoDAO {
     }
 
     public void inserirProduto(Produto produto) {
-        this.query = "INSERT INTO produto (descricao, quantidade, preco, fornecedorId) VALUES (?, ?, ?, ?)";
+        this.query = "INSERT INTO produto (descricao, quantidade, preco, id_fornecedor) VALUES (?, ?, ?, ?)";
         try {
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.ps.setString(1, produto.getDescricao());
@@ -28,4 +28,6 @@ public class ProdutoDAO {
             ex.printStackTrace();
         }
     }
+
+
 }
