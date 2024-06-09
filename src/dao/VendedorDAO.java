@@ -30,7 +30,7 @@ public class VendedorDAO {
             this.ps.setString(7, vendedor.getEstado());
             this.ps.setString(8, vendedor.getPais());
             this.ps.setString(9, vendedor.getEndereco());
-            this.ps.setInt(10, vendedor.getNumero()); // Adicione esta linha
+            this.ps.setInt(10, vendedor.getNumero());
             this.ps.setString(11, vendedor.getDataCadastro());
             this.ps.setString(12, vendedor.getEmail());
             this.ps.setString(13, vendedor.getSenha());
@@ -41,13 +41,37 @@ public class VendedorDAO {
         }
     }
 
-
-    public void listarVendedores() {
-        this.query = "SELECT * FROM vendedor";
+    public boolean verificarVendedor(String email, String senha) {
+        this.query = "SELECT * FROM vendedor WHERE email = ? AND senha = ?";
         try {
             this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setString(1, email);
+            this.ps.setString(2, senha);
             ResultSet rs = this.ps.executeQuery();
-            List<Vendedor> vendedores = new ArrayList<>();
+            if (rs.next()) {
+                return true;
+            }
+            this.ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false;
+    }
+
+    public List<Vendedor> listarVendedores(String email, boolean isAdmin) {
+        List<Vendedor> vendedores = new ArrayList<>();
+        try {
+            if (isAdmin) {
+                this.query = "SELECT * FROM vendedor";
+                this.ps = conexao.getConnection().prepareStatement(this.query);
+            } else {
+                this.query = "SELECT * FROM vendedor WHERE email = ?";
+                this.ps = conexao.getConnection().prepareStatement(this.query);
+                this.ps.setString(1, email);
+            }
+
+            ResultSet rs = this.ps.executeQuery();
+
             while (rs.next()) {
                 Vendedor vendedor = new Vendedor(
                         rs.getString("nome"),
@@ -66,12 +90,10 @@ public class VendedorDAO {
                 );
                 vendedores.add(vendedor);
             }
-            for (Vendedor vendedor : vendedores) {
-                System.out.println(vendedor.getNome() + " " + vendedor.getSobrenome());
-            }
             this.ps.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        return vendedores;
     }
 }
