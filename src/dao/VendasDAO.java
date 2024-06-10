@@ -1,8 +1,7 @@
 package dao;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import models.Vendas;
+import java.sql.*;
 
 public class VendasDAO {
     private Conexao conexao;
@@ -15,16 +14,14 @@ public class VendasDAO {
 
     public void inserirVenda(Vendas venda) {
         this.query = "INSERT INTO vendas (cliente_id, vendedor_id, data, pagamento, parcelas, total) VALUES (?, ?, ?, ?, ?, ?)";
-        try {
-            this.ps = conexao.getConnection().prepareStatement(this.query);
-            this.ps.setInt(1, venda.getClienteId());
-            this.ps.setInt(2, venda.getVendedorId());
-            this.ps.setDouble(3, venda.getData());
-            this.ps.setInt(4, venda.getPagamento());
-            this.ps.setDouble(5, venda.getParcelas());
-            this.ps.setInt(6, venda.getTotal());
-            this.ps.executeUpdate();
-            this.ps.close();
+        try (Connection conn = conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(this.query)) {
+            ps.setInt(1, venda.getClienteId());
+            ps.setInt(2, venda.getVendedorId());
+            ps.setString(3, venda.getData());
+            ps.setInt(4, venda.getPagamento());
+            ps.setDouble(5, venda.getParcelas());
+            ps.setDouble(6, venda.getTotal());
+            ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -32,16 +29,13 @@ public class VendasDAO {
 
     public boolean deletarVenda(int id) {
         this.query = "DELETE FROM vendas WHERE id = ?";
-        try {
-            this.ps = conexao.getConnection().prepareStatement(this.query);
-            this.ps.setInt(1, id);
-            int rowsAffected = this.ps.executeUpdate();
-            this.ps.close();
+        try (Connection conn = conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(this.query)) {
+            ps.setInt(1, id);
+            int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         }
     }
-
 }

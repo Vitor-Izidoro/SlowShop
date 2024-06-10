@@ -3,7 +3,7 @@ package models;
 import java.time.LocalDate;
 
 public class Cliente {
-
+    private int Id;
     private String nome;
     private String sobrenome;
     private LocalDate dataNascimento;
@@ -138,4 +138,12 @@ public class Cliente {
     public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int Id) {
+        this.Id = Id;
+    }
+
 }

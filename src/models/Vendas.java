@@ -1,17 +1,15 @@
 package models;
 
-import java.sql.*;
-
 public class Vendas {
     private int id;
     private int clienteId;
     private int vendedorId;
-    private double data;
+    private String data;
     private int pagamento;
     private double parcelas;
-    private int total;
+    private double total;
 
-    public Vendas(int id, int clienteId, int vendedorId, double data, int pagamento, double parcelas, int total) {
+    public Vendas(int id, int clienteId, int vendedorId, String data, int pagamento, double parcelas, double total) {
         this.id = id;
         this.clienteId = clienteId;
         this.vendedorId = vendedorId;
@@ -20,7 +18,6 @@ public class Vendas {
         this.parcelas = parcelas;
         this.total = total;
     }
-
 
     public int getId() {
         return id;
@@ -46,11 +43,11 @@ public class Vendas {
         this.vendedorId = vendedorId;
     }
 
-    public double getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(double data) {
+    public void setData(String data) {
         this.data = data;
     }
 
@@ -70,11 +67,11 @@ public class Vendas {
         this.parcelas = parcelas;
     }
 
-    public int getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 }

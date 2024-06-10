@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.sql.Date;
 
 public class Vendedor {
+    private int Id;
     private String nome;
     private String sobrenome;
     private LocalDate dataNascimento;
@@ -20,6 +21,7 @@ public class Vendedor {
 
     // Construtor
     public Vendedor(String nome, String sobrenome, LocalDate dataNascimento, String telefone, String cpf, String cidade, String estado, String pais, String endereco, int numero, LocalDate dataCadastro, String email, String senha) {
+        this.Id=Id;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.dataNascimento = dataNascimento;
@@ -138,5 +140,11 @@ public class Vendedor {
 
     public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public int getId(){return Id;}
+
+    public void setId(int Id) {
+        this.Id = Id;
     }
 }

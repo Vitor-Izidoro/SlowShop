@@ -16,25 +16,23 @@ public class Fornecedor {
     private LocalDate dataCadastro;
     private String senha;
 
-
-    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, int telefone, String cidade, String estado, String pais, String endereco, int numero, LocalDate dataCadastro, String senha) {
+    // Construtor completo
+    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, String telefone, String cidade, String estado, String pais, String endereco, String numero, LocalDate dataCadastro, String senha) {
         this.nomeFantasia = nomeFantasia;
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
         this.email = email;
-        this.telefone = String.valueOf(telefone);
+        this.telefone = telefone;
         this.cidade = cidade;
         this.estado = estado;
         this.pais = pais;
         this.endereco = endereco;
-        this.numero = String.valueOf(numero);
+        this.numero = numero;
         this.dataCadastro = dataCadastro;
         this.senha = senha;
     }
 
-    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, String telefone, String cpf, String cidade, String estado, String pais, String endereco, LocalDate dataCadastro, String senha) {
-    }
-
+    // Getters e Setters
     public String getNomeFantasia() {
         return nomeFantasia;
     }
@@ -68,10 +66,11 @@ public class Fornecedor {
     }
 
     public String getTelefone() {
-        return telefone;}
+        return telefone;
+    }
 
-    public void setTelefone(int telefone) {
-        this.telefone = String.valueOf(telefone);
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public String getCidade() {
@@ -90,7 +89,9 @@ public class Fornecedor {
         this.estado = estado;
     }
 
-    public String getPais() { return pais; }
+    public String getPais() {
+        return pais;
+    }
 
     public void setPais(String pais) {
         this.pais = pais;
@@ -108,8 +109,8 @@ public class Fornecedor {
         return numero;
     }
 
-    public void setNumero(int numero) {
-        this.numero = String.valueOf(numero);
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 
     public LocalDate getDataCadastro() {
@@ -128,39 +129,3 @@ public class Fornecedor {
         this.senha = senha;
     }
 }
-/*
-public class Fornecedor {
-    private int id;
-    private String nomeFantasia;
-    private String razaoSocial;
-    private String cnpj;
-    private String email;
-    private String telefone;
-    private String cidade;
-    private String estado;
-    private String pais;
-    private String endereco;
-    private String numero;
-    private String dataCadastro;
-    private String senha;
-
-    // Construtor, getters e setters
-    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, String telefone, String cidade, String estado, String pais, String endereco, String numero, String dataCadastro, String senha) {
-        this.nomeFantasia = nomeFantasia;
-        this.razaoSocial = razaoSocial;
-        this.cnpj = cnpj;
-        this.email = email;
-        this.telefone = telefone;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.pais = pais;
-        this.endereco = endereco;
-        this.numero = numero;
-        this.dataCadastro = dataCadastro;
-        this.senha = senha;
-    }
-
-    // getters e setters omitidos por brevidade
-}
-
- */
