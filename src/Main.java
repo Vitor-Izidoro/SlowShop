@@ -237,10 +237,10 @@ public class Main {
                         listarClientes(clienteDAO);
                         break;
                     case 8:
-                        listarFornecedores();
+                        //listarFornecedores();
                         break;
                     case 9:
-                        listarProdutos();
+                        //listarProdutos();
                         break;
                     case 10:
                         if (!isAdmin && !isVendedor) {

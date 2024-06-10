@@ -75,8 +75,8 @@ public class ClienteDAO {
     public List<Cliente> listarClientes() {
         List<Cliente> clientes = new ArrayList<>();
         try {
-            String query = "SELECT * FROM clientes";
-            Statement stmt = conexao.getConnection().createStatement();
+            String query = "SELECT * FROM pessoa";
+            Statement stmt = conexao.getConnection().prepareStatement(this.query);
             ResultSet rs = stmt.executeQuery(query);
 
             while (rs.next()) {
