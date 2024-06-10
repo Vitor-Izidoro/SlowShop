@@ -1,5 +1,7 @@
 package models;
 
+import java.time.LocalDate;
+
 public class Fornecedor {
     private String nomeFantasia;
     private String razaoSocial;
@@ -11,11 +13,11 @@ public class Fornecedor {
     private String pais;
     private String endereco;
     private String numero;
-    private String dataCadastro;
+    private LocalDate dataCadastro;
     private String senha;
 
 
-    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, String telefone, String cidade, String estado, String pais, String endereco, String numero, String dataCadastro, String senha) {
+    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, String telefone, String cidade, String estado, String pais, String endereco, String numero, LocalDate dataCadastro, String senha) {
         this.nomeFantasia = nomeFantasia;
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
@@ -28,6 +30,9 @@ public class Fornecedor {
         this.numero = numero;
         this.dataCadastro = dataCadastro;
         this.senha = senha;
+    }
+
+    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, String telefone, String cpf, String cidade, String estado, String pais, String endereco, int numero, LocalDate dataCadastro, String senha) {
     }
 
     public String getNomeFantasia() {
@@ -110,13 +115,14 @@ public class Fornecedor {
         this.numero = numero;
     }
 
-    public String getDataCadastro() {
+    public LocalDate getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(String dataCadastro) {
+    public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
+
     public String getSenha() {
         return senha;
     }

@@ -1,8 +1,14 @@
 package dao;
 
+import models.Cliente;
 import models.Fornecedor;
+
+import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FornecedorDAO {
 
@@ -28,14 +34,16 @@ public class FornecedorDAO {
             this.ps.setString(8, fornecedor.getPais());
             this.ps.setString(9, fornecedor.getEndereco());
             this.ps.setString(10, fornecedor.getNumero());
-            this.ps.setString(11, fornecedor.getDataCadastro());
+            this.ps.setDate(11, Date.valueOf(fornecedor.getDataCadastro()));
             this.ps.setString(12, fornecedor.getSenha()); // Novo campo
             this.ps.executeUpdate();
             this.ps.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+
     }
+
     public boolean deletarFornecedor(String email) {
         this.query = "DELETE FROM fornecedor WHERE email = ?";
         try {
@@ -50,6 +58,36 @@ public class FornecedorDAO {
         }
     }
 
+    public List<Fornecedor> listarFornecedor() {
+        List<Fornecedor> fornecedores = new ArrayList<>();
+        this.query = "SELECT * FROM pessoa";
+        try {
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            ResultSet rs = this.ps.executeQuery();
+            while (rs.next()) {
+                Fornecedor fornedor = new Fornecedor(
+                        rs.getString("NomeFantasia"),
+                        rs.getString("RazaoSocial"),
+                        rs.getString("CNPJ"),
+                        rs.getString("email"),
+                        rs.getString("telefone"),
+                        rs.getString("cpf"),
+                        rs.getString("cidade"),
+                        rs.getString("estado"),
+                        rs.getString("pais"),
+                        rs.getString("endereco"),
+                        rs.getInt("numero"),
+                        rs.getDate("dataCadastro").toLocalDate(),
+                        rs.getString("senha")
+                );
+                fornecedores.add(fornedor);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return fornecedores;
+    }
 }
 /*import models.Fornecedor;
 

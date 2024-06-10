@@ -15,8 +15,8 @@ public class Conexao {
 
     public Conexao() {
         this.bdUsuario = "root";
-        this.bdSenha = "C0x1nh4123";
-        this.bdHost = "jdbc:mysql://127.0.0.1:3306/slowshop?useSSL=false";
+        this.bdSenha = "Garfield12";
+        this.bdHost = "jdbc:mysql://127.0.0.1:3307/slowshop?useSSL=false";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

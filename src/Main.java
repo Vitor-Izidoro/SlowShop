@@ -225,7 +225,7 @@ public class Main {
                         System.out.print("Número: ");
                         String numeroFornecedor = sc.nextLine();
                         System.out.print("Data de Cadastro: ");
-                        String dataCadastroFornecedor = sc.nextLine();
+                        LocalDate dataCadastroFornecedor = LocalDate.now();
 
                         Fornecedor fornecedor = new Fornecedor(nomeFantasia, razaoSocial, cnpj, emailFornecedor, telefoneFornecedor, cidadeFornecedor, estadoFornecedor, paisFornecedor, enderecoFornecedor, numeroFornecedor, dataCadastroFornecedor, senha);
                         FornecedorDAO fDao = new FornecedorDAO();
@@ -388,84 +388,84 @@ public class Main {
                         }
                         break;
 
-                    case 15:
-                        if (!isVendedor) {
-                            System.out.println("Acesso negado. Apenas vendedores podem registrar vendas.");
-                            break;
-                        }
-                        System.out.println("Registrar Venda:");
-
-                        // Solicitar ID do Cliente
-                        System.out.print("ID do Cliente: ");
-                        int clienteId = sc.nextInt();
-                        sc.nextLine(); // Consumir a quebra de linha
-
-                        // Solicitar ID do Produto
-                        System.out.print("ID do Produto: ");
-                        int produtoId = sc.nextInt();
-                        sc.nextLine(); // Consumir a quebra de linha
-
-                        // Solicitar quantidade do produto
-                        System.out.print("Quantidade: ");
-                        int quantidade = sc.nextInt();
-                        sc.nextLine(); // Consumir a quebra de linha
-
-                        // Buscar o produto para obter o preço
-                        Produto produto = produtoDAO.buscarProdutoPorId(produtoId);
-                        if (produto == null || produto.getQuantidade() < quantidade) {
-                            System.out.println("Produto não encontrado ou quantidade insuficiente em estoque.");
-                            break;
-                        }
-
-                        // Calcular o total da compra
-                        double precoProduto = produto.getPreco();
-                        int total = (int) (precoProduto * quantidade);
-
-                        // Solicitar tipo de pagamento
-                        System.out.println("Tipo de Pagamento:");
-                        System.out.println("(1) Crédito");
-                        System.out.println("(2) Débito");
-                        System.out.println("(3) Dinheiro");
-                        int tipoPagamento = sc.nextInt();
-                        double parcelas = 1; // Número padrão de parcelas é 1
-                        if (tipoPagamento == 1) { // Se o pagamento for em crédito
-                            System.out.print("Total da Compra: ");
-                            double totalCompra = sc.nextDouble();
-                            if (totalCompra > 1000) { // Se a compra for acima de 1000 reais
-                                System.out.println("Deseja parcelar em quantas vezes? (Máximo de 5 vezes)");
-                                parcelas = sc.nextDouble();
-                                if (parcelas > 5) {
-                                    System.out.println("Parcelamento máximo permitido é de 5 vezes.");
-                                    break;
-                                }
-                                if (parcelas > 1) {
-                                    // Aplicar acréscimo de juros de 5% para parcelamento acima de 1 vez
-                                    total *= 1.05; // Acréscimo de 5% no total da compra
-                                } else {
-                                    System.out.println("Número inválido de parcelas.");
-                                    break;
-                                }
-                            }
-                        }
-
-                        // Reduzir a quantidade do produto no estoque
-                        produto.setQuantidade(produto.getQuantidade() - quantidade);
-                        produtoDAO.atualizarProduto(produto);
-
-                        // Obter a data e hora atuais
-                        LocalDateTime dataAtual = LocalDateTime.now();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                        String dataFormatada = dataAtual.format(formatter);
-
-                        // Criar um novo objeto Vendas com os dados coletados
-                        Vendas venda = new Vendas(0, clienteId, vendedorDAO.buscarVendedorPorEmail(loggedInEmail).getId(),
-                                dataAtual.toString(), tipoPagamento, parcelas, total);
-
-                        // Registrar a venda no banco de dados
-                        vendasDAO.inserirVenda(venda);
-
-                        System.out.println("Venda registrada com sucesso!");
-                        break;
+//                    case 15:
+//                        if (!isVendedor) {
+//                            System.out.println("Acesso negado. Apenas vendedores podem registrar vendas.");
+//                            break;
+//                        }
+//                        System.out.println("Registrar Venda:");
+//
+//                        // Solicitar ID do Cliente
+//                        System.out.print("ID do Cliente: ");
+//                        int clienteId = sc.nextInt();
+//                        sc.nextLine(); // Consumir a quebra de linha
+//
+//                        // Solicitar ID do Produto
+//                        System.out.print("ID do Produto: ");
+//                        int produtoId = sc.nextInt();
+//                        sc.nextLine(); // Consumir a quebra de linha
+//
+//                        // Solicitar quantidade do produto
+//                        System.out.print("Quantidade: ");
+//                        int quantidade = sc.nextInt();
+//                        sc.nextLine(); // Consumir a quebra de linha
+//
+//                        // Buscar o produto para obter o preço
+//                        Produto produto = produtoDAO.buscarProdutoPorId(produtoId);
+//                        if (produto == null || produto.getQuantidade() < quantidade) {
+//                            System.out.println("Produto não encontrado ou quantidade insuficiente em estoque.");
+//                            break;
+//                        }
+//
+//                        // Calcular o total da compra
+//                        double precoProduto = produto.getPreco();
+//                        int total = (int) (precoProduto * quantidade);
+//
+//                        // Solicitar tipo de pagamento
+//                        System.out.println("Tipo de Pagamento:");
+//                        System.out.println("(1) Crédito");
+//                        System.out.println("(2) Débito");
+//                        System.out.println("(3) Dinheiro");
+//                        int tipoPagamento = sc.nextInt();
+//                        double parcelas = 1; // Número padrão de parcelas é 1
+//                        if (tipoPagamento == 1) { // Se o pagamento for em crédito
+//                            System.out.print("Total da Compra: ");
+//                            double totalCompra = sc.nextDouble();
+//                            if (totalCompra > 1000) { // Se a compra for acima de 1000 reais
+//                                System.out.println("Deseja parcelar em quantas vezes? (Máximo de 5 vezes)");
+//                                parcelas = sc.nextDouble();
+//                                if (parcelas > 5) {
+//                                    System.out.println("Parcelamento máximo permitido é de 5 vezes.");
+//                                    break;
+//                                }
+//                                if (parcelas > 1) {
+//                                    // Aplicar acréscimo de juros de 5% para parcelamento acima de 1 vez
+//                                    total *= 1.05; // Acréscimo de 5% no total da compra
+//                                } else {
+//                                    System.out.println("Número inválido de parcelas.");
+//                                    break;
+//                                }
+//                            }
+//                        }
+//
+//                        // Reduzir a quantidade do produto no estoque
+//                        produto.setQuantidade(produto.getQuantidade() - quantidade);
+//                        produtoDAO.atualizarProduto(produto);
+//
+//                        // Obter a data e hora atuais
+//                        LocalDateTime dataAtual = LocalDateTime.now();
+//                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//                        String dataFormatada = dataAtual.format(formatter);
+//
+//                        // Criar um novo objeto Vendas com os dados coletados
+//                        Vendas venda = new Vendas(0, clienteId, vendedorDAO.buscarVendedorPorEmail(loggedInEmail).getId(),
+//                                dataAtual.toString(), tipoPagamento, parcelas, total);
+//
+//                        // Registrar a venda no banco de dados
+//                        vendasDAO.inserirVenda(venda);
+//
+//                        System.out.println("Venda registrada com sucesso!");
+//                        break;
 
                     case 16:
                         System.out.println("Saindo...");
