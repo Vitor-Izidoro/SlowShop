@@ -15,6 +15,7 @@ public class ClienteDAO {
     private Conexao conexao;
     private String query;
     private PreparedStatement ps;
+    private ResultSet rs;
 
     public ClienteDAO() {
         conexao = Conexao.getConexao();
@@ -39,7 +40,8 @@ public class ClienteDAO {
             this.ps.setString(13, cliente.getDataCadastro());
             this.ps.executeUpdate();
             this.ps.close();
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
@@ -72,35 +74,21 @@ public class ClienteDAO {
         }
         return false; // Cliente não encontrado
     }
-    public List<Cliente> listarClientes() {
-        List<Cliente> clientes = new ArrayList<>();
-        try {
-            String query = "SELECT * FROM pessoa";
-            Statement stmt = conexao.getConnection().prepareStatement(this.query);
-            ResultSet rs = stmt.executeQuery(query);
+    public ResultSet listarClientes() {
+        this.query = "SELECT * FROM cliente";
 
-            while (rs.next()) {
-                Cliente cliente = new Cliente(
-                        rs.getString("nome"),
-                        rs.getString("sobrenome"),
-                        rs.getString("data_nascimento"),
-                        rs.getString("telefone"),
-                        rs.getString("cpf"),
-                        rs.getString("cidade"),
-                        rs.getString("estado"),
-                        rs.getString("pais"),
-                        rs.getString("endereco"),
-                        rs.getString("numero"),
-                        rs.getString("email"),
-                        rs.getString("senha"),
-                        rs.getString("data_cadastro")
-                );
-                clientes.add(cliente);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        try {
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.rs = this.ps.executeQuery(query);
         }
-        return clientes;
+        catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        return this.rs;
     }
 }
-}
+
