@@ -322,7 +322,7 @@ public class Main {
                             System.out.println("Acesso negado. Apenas administradores ou vendedores podem deletar clientes.");
                             break;
                         }
-                        System.out.print("Email do Vendedor a ser deletado: ");
+                        System.out.print("Email do fonecedor a ser deletado: ");
                         String emailFornecedorDeletar = sc.nextLine();
 
                         // FornecedorDAO fornecedorDAO = new FornecedorDAO(); // Criar uma instância de FornecedorDAO
