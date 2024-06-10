@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS `fornecedor`;
 
 -- Criar tabela fornecedor
 CREATE TABLE `fornecedor` (
+  `id_fornecedor` INT NOT NULL AUTO_INCREMENT,
   `NomeFantasia` varchar(145) NOT NULL,
   `RazaoSocial` varchar(145) NOT NULL,
   `CNPJ` varchar(145) NOT NULL,
@@ -17,16 +18,18 @@ CREATE TABLE `fornecedor` (
   `pais` varchar(145) NOT NULL,
   `endereco` varchar(145) NOT NULL,
   `numero` int NOT NULL,
-  `dataCadastr` varchar(145) NOT NULL,
+  `dataCadastro` DATE NOT NULL,
   `senha` varchar(145) NOT NULL,
-  PRIMARY KEY (`NomeFantasia`)
+  PRIMARY KEY (`id_fornecedor`),
+  UNIQUE (`NomeFantasia`)
 );
 
 -- Criar tabela pessoa
 CREATE TABLE `pessoa` (
+  `id_pessoa` INT NOT NULL AUTO_INCREMENT,
   `nome` varchar(145) NOT NULL,
   `sobrenome` varchar(145) NOT NULL,
-  `dataNascimento` varchar(145) NOT NULL,
+  `dataNascimento` DATE NOT NULL,
   `telefone` int NOT NULL,
   `cpf` int NOT NULL,
   `cidade` varchar(45) NOT NULL,
@@ -36,15 +39,17 @@ CREATE TABLE `pessoa` (
   `numero` int NOT NULL,
   `email` varchar(145) NOT NULL,
   `senha` varchar(145) NOT NULL,
-  `dataCadastro` varchar(145) NOT NULL,
-  PRIMARY KEY (`cpf`)
+  `dataCadastro` DATE NOT NULL,
+  PRIMARY KEY (`id_pessoa`),
+  UNIQUE (`cpf`)
 );
 
 -- Criar tabela vendedor
 CREATE TABLE `vendedor` (
+  `id_vendedor` INT NOT NULL AUTO_INCREMENT,
   `nome` varchar(145) NOT NULL,
   `sobrenome` varchar(145) NOT NULL,
-  `dataNascimento` varchar(145) NOT NULL,
+  `dataNascimento` DATE NOT NULL,
   `telefone` int NOT NULL,
   `cpf` int NOT NULL,
   `cidade` varchar(45) NOT NULL,
@@ -54,24 +59,45 @@ CREATE TABLE `vendedor` (
   `numero` int NOT NULL,
   `email` varchar(145) NOT NULL,
   `senha` varchar(145) NOT NULL,
-  `dataCadastro` varchar(145) NOT NULL,
-  PRIMARY KEY (`cpf`)
+  `dataCadastro` DATE NOT NULL ,
+  PRIMARY KEY (`id_vendedor`),
+  UNIQUE (`cpf`)
 );
+
 
 -- Criar tabela admin
 CREATE TABLE `admin` (
+  `id_admin` INT NOT NULL AUTO_INCREMENT,
   `nome` varchar(145) NOT NULL,
   `email` varchar(145) NOT NULL,
   `senha` varchar(145) NOT NULL,
-  PRIMARY KEY (`email`)
+  PRIMARY KEY (`id_admin`),
+  UNIQUE (`email`)
 );
 
 -- Criar tabela produto com chave estrangeira para fornecedor
 CREATE TABLE `produto` (
+  `id_produto` INT NOT NULL AUTO_INCREMENT,
   `descricao` varchar(145) NOT NULL,
   `quantidade` int NOT NULL,
-  `preco` varchar(145) NOT NULL,
-  `fornecedor` varchar(145),
-  PRIMARY KEY (`descricao`),
-  FOREIGN KEY (`fornecedor`) REFERENCES `fornecedor`(`NomeFantasia`)
+  `preco` double NOT NULL,
+  `id_fornecedor` INT,
+  PRIMARY KEY (`id_produto`),
+  FOREIGN KEY (`id_fornecedor`) REFERENCES `fornecedor`(`id_fornecedor`)
+);
+
+-- Criar tabela vendas com chaves estrangeiras para cliente e vendedor
+CREATE TABLE `vendas` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `cliente_id` INT,
+  `vendedor_id` INT,
+  `produto_id` INT,
+  `data` DATETIME NOT NULL,
+  `pagamento` INT,
+  `parcelas` double NOT NULL,
+  `total` INT,
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`cliente_id`) REFERENCES `pessoa`(`id_pessoa`),
+  FOREIGN KEY (`vendedor_id`) REFERENCES `vendedor`(`id_vendedor`),
+  FOREIGN KEY (`produto_id`) REFERENCES `produto`(`id_produto`)
 );

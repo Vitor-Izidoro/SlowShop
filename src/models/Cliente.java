@@ -1,21 +1,25 @@
 package models;
 
+import java.time.LocalDate;
+
 public class Cliente {
+    private int id;
     private String nome;
     private String sobrenome;
-    private String dataNascimento;
+    private LocalDate dataNascimento;
     private String telefone;
     private String cpf;
     private String cidade;
     private String estado;
     private String pais;
     private String endereco;
-    private String numero;
+    private int numero;
     private String email;
     private String senha;
-    private String dataCadastro;
-
-    public Cliente(String nome, String sobrenome, String dataNascimento, String telefone, String cpf, String cidade, String estado, String pais, String endereco, String numero, String email, String senha, String dataCadastro) {
+    private LocalDate dataCadastro;
+    public Cliente() {}
+    public Cliente(int id, String nome, String sobrenome, LocalDate dataNascimento, String telefone, String cpf, String cidade, String estado, String pais, String endereco, int numero, LocalDate dataCadastro, String email, String senha) {
+        this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.dataNascimento = dataNascimento;
@@ -26,9 +30,18 @@ public class Cliente {
         this.pais = pais;
         this.endereco = endereco;
         this.numero = numero;
+        this.dataCadastro = dataCadastro;
         this.email = email;
         this.senha = senha;
-        this.dataCadastro = dataCadastro;
+    }
+
+    // Getters e Setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -47,11 +60,11 @@ public class Cliente {
         this.sobrenome = sobrenome;
     }
 
-    public String getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(String dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
@@ -103,11 +116,11 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    public String getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 
@@ -127,11 +140,11 @@ public class Cliente {
         this.senha = senha;
     }
 
-    public String getDataCadastro() {
+    public LocalDate getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(String dataCadastro) {
+    public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
 }
