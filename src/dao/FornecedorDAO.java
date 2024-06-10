@@ -37,3 +37,30 @@ public class FornecedorDAO {
         }
     }
 }
+/*import models.Fornecedor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class FornecedorDAO {
+    private static List<Fornecedor> fornecedores = new ArrayList<>();
+
+    public void inserirFornecedor(Fornecedor fornecedor) {
+        fornecedor.setId(fornecedores.size() + 1);
+        fornecedores.add(fornecedor);
+    }
+
+    public List<Fornecedor> listarFornecedores() {
+        return new ArrayList<>(fornecedores);
+    }
+
+    public Fornecedor buscarFornecedorPorEmail(String email) {
+        for (Fornecedor fornecedor : fornecedores) {
+            if (fornecedor.getEmail().equals(email)) {
+                return fornecedor;
+            }
+        }
+        return null;
+    }
+}*/
+

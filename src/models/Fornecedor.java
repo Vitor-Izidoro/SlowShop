@@ -125,3 +125,39 @@ public class Fornecedor {
         this.senha = senha;
     }
 }
+/*
+public class Fornecedor {
+    private int id;
+    private String nomeFantasia;
+    private String razaoSocial;
+    private String cnpj;
+    private String email;
+    private String telefone;
+    private String cidade;
+    private String estado;
+    private String pais;
+    private String endereco;
+    private String numero;
+    private String dataCadastro;
+    private String senha;
+
+    // Construtor, getters e setters
+    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, String telefone, String cidade, String estado, String pais, String endereco, String numero, String dataCadastro, String senha) {
+        this.nomeFantasia = nomeFantasia;
+        this.razaoSocial = razaoSocial;
+        this.cnpj = cnpj;
+        this.email = email;
+        this.telefone = telefone;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.pais = pais;
+        this.endereco = endereco;
+        this.numero = numero;
+        this.dataCadastro = dataCadastro;
+        this.senha = senha;
+    }
+
+    // getters e setters omitidos por brevidade
+}
+
+ */

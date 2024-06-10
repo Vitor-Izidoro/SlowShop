@@ -31,3 +31,23 @@ public class ProdutoDAO {
 
 
 }
+/*
+import models.Produto;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProdutoDAO {
+    private static List<Produto> produtos = new ArrayList<>();
+
+    public void inserirProduto(Produto produto) {
+        produto.setId(produtos.size() + 1);
+        produtos.add(produto);
+    }
+
+    public List<Produto> listarProdutos() {
+        return new ArrayList<>(produtos);
+    }
+}
+
+ */
