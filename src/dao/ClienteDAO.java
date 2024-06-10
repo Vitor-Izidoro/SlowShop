@@ -64,7 +64,6 @@ public class ClienteDAO {
             ResultSet rs = this.ps.executeQuery();
             while (rs.next()) {
                 Cliente cliente = new Cliente(
-                        rs.getInt("id_pessoa"),
                         rs.getString("nome"),
                         rs.getString("sobrenome"),
                         rs.getDate("dataNascimento").toLocalDate(),

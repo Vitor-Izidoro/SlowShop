@@ -88,7 +88,6 @@ public class VendedorDAO {
             ResultSet rs = this.ps.executeQuery();
             while (rs.next()) {
                 Vendedor vendedor = new Vendedor(
-                        rs.getInt("id_vendedor"),
                         rs.getString("nome"),
                         rs.getString("sobrenome"),
                         rs.getDate("dataNascimento").toLocalDate(),

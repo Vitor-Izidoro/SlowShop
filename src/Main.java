@@ -18,7 +18,6 @@ public class Main {
         List<Vendedor> vendedores = vendedorDAO.listarVendedores();
         for (Vendedor vendedor : vendedores) {
             System.out.println(
-                    "ID: " + vendedor.getId() + "\n" +
                             "Nome: " + vendedor.getNome() + "\n" +
                             "Sobrenome: " + vendedor.getSobrenome() + "\n" +
                             "Data de Nascimento: " + vendedor.getDataNascimento() + "\n" +
@@ -41,7 +40,7 @@ public class Main {
         List<Cliente> cliente = clienteDAO.listarCliente();
         for (Cliente clientes : cliente) {
             System.out.println(
-                    "ID: " + clientes.getId() + "\n" +
+
                             "Nome: " + clientes.getNome() + "\n" +
                             "Sobrenome: " + clientes.getSobrenome() + "\n" +
                             "Data de Nascimento: " + clientes.getDataNascimento() + "\n" +
@@ -59,6 +58,25 @@ public class Main {
             System.out.println("-----------------------------------");
         }
     }
+    private static void listarFornecedor(FornecedorDAO fornecedorDAO) {
+        List<Fornecedor> fornecedores = fornecedorDAO.listarFornecedor();
+        for (Fornecedor fornecedor : fornecedores) {
+            System.out.println(
+                    "Nome Fantasia: " + fornecedor.getNomeFantasia() + "\n" +
+                            "Razao Social: " + fornecedor.getRazaoSocial() + "\n" +
+                            "CNPJ: " + fornecedor.getCnpj() + "\n" +
+                            "email: " + fornecedor.getEmail() + "\n" +
+                            "telefone: " + fornecedor.getTelefone() + "\n" +
+                            "cidade: " + fornecedor.getCidade() + "\n" +
+                            "estado: " + fornecedor.getEstado() + "\n" +
+                            "país: " + fornecedor.getPais() + "\n" +
+                            "endereço: " + fornecedor.getEndereco() + "\n" +
+                            "número: " + fornecedor.getNumero() + "\n" +
+                            "data de cadastro: " + fornecedor.getDataCadastro() + "\n"
+            );
+            System.out.println("-----------------------------------");
+        }
+    }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -70,6 +88,7 @@ public class Main {
         AdminDAO adminDAO = new AdminDAO();
         VendedorDAO vendedorDAO = new VendedorDAO();
         ClienteDAO clienteDAO = new ClienteDAO();
+        FornecedorDAO fornecedorDAO = new FornecedorDAO();
 
         isAdmin = adminDAO.verificarAdmin(email, senha);
         isVendedor = vendedorDAO.verificarVendedor(email, senha);
@@ -157,7 +176,7 @@ public class Main {
                         System.out.print("Senha: ");
                         String senhaVendedor = sc.nextLine();
 
-                        Vendedor vendedor = new Vendedor(0, nome, sobrenome, dataNascimento, telefone, cpf, cidade, estado, pais, endereco, numero, dataCadastro, emailVendedor, senhaVendedor);
+                        Vendedor vendedor = new Vendedor( nome, sobrenome, dataNascimento, telefone, cpf, cidade, estado, pais, endereco, numero, dataCadastro, emailVendedor, senhaVendedor);
                         vendedorDAO.inserirVendedor(vendedor);
                         System.out.println("Vendedor cadastrado com sucesso!");
                         break;
@@ -194,7 +213,7 @@ public class Main {
                         System.out.print("Senha: ");
                         String senhaCliente = sc.nextLine();
 
-                        Cliente cliente = new Cliente(0, nomeCliente, sobrenomeCliente, dataNascimentoCliente, telefoneCliente, cpfCliente, cidadeCliente, estadoCliente, paisCliente, enderecoCliente, numeroCliente, dataCadastroCliente, emailCliente, senhaCliente);
+                        Cliente cliente = new Cliente(nomeCliente, sobrenomeCliente, dataNascimentoCliente, telefoneCliente, cpfCliente, cidadeCliente, estadoCliente, paisCliente, enderecoCliente, numeroCliente, dataCadastroCliente, emailCliente, senhaCliente);
                         ClienteDAO cDao = new ClienteDAO();
                         cDao.inserirCliente(cliente);
                         System.out.println("Cliente cadastrado com sucesso!");
@@ -265,7 +284,7 @@ public class Main {
                         listarCliente(clienteDAO);
                         break;
                     case 8:
-                        //listarFornecedores();
+                        listarFornecedor(fornecedorDAO);
                         break;
                     case 9:
                         //listarProdutos();
@@ -306,7 +325,7 @@ public class Main {
                         System.out.print("Email do Vendedor a ser deletado: ");
                         String emailFornecedorDeletar = sc.nextLine();
 
-                        FornecedorDAO fornecedorDAO = new FornecedorDAO(); // Criar uma instância de FornecedorDAO
+                        // FornecedorDAO fornecedorDAO = new FornecedorDAO(); // Criar uma instância de FornecedorDAO
                         boolean fornecedorDeletado = fornecedorDAO.deletarFornecedor(emailFornecedorDeletar);
 
                         if (fornecedorDeletado) {
@@ -373,7 +392,7 @@ public class Main {
                             String novaSenha = sc.nextLine();
 
                             // Criar um novo objeto Cliente com os dados atualizados
-                            Cliente novocliente = new Cliente(0, novoNome, novoSobrenome, LocalDate.parse(novaDataNascimento), novoTelefone, novoCpf, novaCidade, novoEstado, novoPais, novoEndereco, novoNumero, LocalDate.parse(novaDataCadastro), emailClienteEditar, novaSenha);
+                            Cliente novocliente = new Cliente( novoNome, novoSobrenome, LocalDate.parse(novaDataNascimento), novoTelefone, novoCpf, novaCidade, novoEstado, novoPais, novoEndereco, novoNumero, LocalDate.parse(novaDataCadastro), emailClienteEditar, novaSenha);
 
                             // Atualizar o cliente no banco de dados
                             boolean sucesso = clienteDAO.editarCliente(emailClienteEditar, novocliente);

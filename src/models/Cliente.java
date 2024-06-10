@@ -3,7 +3,7 @@ package models;
 import java.time.LocalDate;
 
 public class Cliente {
-    private int id;
+
     private String nome;
     private String sobrenome;
     private LocalDate dataNascimento;
@@ -18,8 +18,7 @@ public class Cliente {
     private String senha;
     private LocalDate dataCadastro;
     public Cliente() {}
-    public Cliente(int id, String nome, String sobrenome, LocalDate dataNascimento, String telefone, String cpf, String cidade, String estado, String pais, String endereco, int numero, LocalDate dataCadastro, String email, String senha) {
-        this.id = id;
+    public Cliente(String nome, String sobrenome, LocalDate dataNascimento, String telefone, String cpf, String cidade, String estado, String pais, String endereco, int numero, LocalDate dataCadastro, String email, String senha) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.dataNascimento = dataNascimento;
@@ -36,14 +35,6 @@ public class Cliente {
     }
 
     // Getters e Setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getNome() {
         return nome;
     }
