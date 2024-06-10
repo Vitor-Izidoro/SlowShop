@@ -87,20 +87,7 @@ public class ClienteDAO {
         return clientes;
     }
 
-    public boolean verificarCliente(String email, String senha) {
-        this.query = "SELECT * FROM pessoa WHERE email = ?";
-        try {
-            this.ps = conexao.getConnection().prepareStatement(this.query);
-            this.ps.setString(1, email);
-            ResultSet rs = this.ps.executeQuery();
-            boolean found = rs.next(); // Verifica se há resultados
-            this.ps.close();
-            return found; // Retorna true se o cliente foi encontrado
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false; // Cliente não encontrado
-        }
-    }
+
 
     public boolean editarCliente(String email, Cliente cliente) {
         this.query = "UPDATE pessoa SET nome = ?, sobrenome = ?, dataNascimento = ?, telefone = ?, cpf = ?, cidade = ?, estado = ?, pais = ?, endereco = ?, numero = ?, dataCadastro = ?, senha = ? WHERE email = ?";
@@ -128,6 +115,19 @@ public class ClienteDAO {
         }
     }
 
-
+    public boolean verificarCliente(String email, String senha) {
+        this.query = "SELECT * FROM pessoa WHERE email = ?";
+        try {
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setString(1, email);
+            ResultSet rs = this.ps.executeQuery();
+            boolean found = rs.next(); // Verifica se há resultados
+            this.ps.close();
+            return found; // Retorna true se o cliente foi encontrado
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false; // Cliente não encontrado
+        }
+    }
 
 }
