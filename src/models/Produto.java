@@ -45,3 +45,21 @@ public class Produto {
         this.fornecedorId = fornecedorId;
     }
 }
+/*
+public class Produto {
+    private int id;
+    private String descricao;
+    private int quantidade;
+    private double preco;
+
+    // Construtor, getters e setters
+    public Produto(String descricao, int quantidade, double preco) {
+        this.descricao = descricao;
+        this.quantidade = quantidade;
+        this.preco = preco;
+    }
+
+    // getters e setters omitidos por brevidade
+}
+
+ */
