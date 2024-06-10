@@ -17,22 +17,22 @@ public class Fornecedor {
     private String senha;
 
 
-    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, String telefone, String cidade, String estado, String pais, String endereco, String numero, LocalDate dataCadastro, String senha) {
+    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, int telefone, String cidade, String estado, String pais, String endereco, int numero, LocalDate dataCadastro, String senha) {
         this.nomeFantasia = nomeFantasia;
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
         this.email = email;
-        this.telefone = telefone;
+        this.telefone = String.valueOf(telefone);
         this.cidade = cidade;
         this.estado = estado;
         this.pais = pais;
         this.endereco = endereco;
-        this.numero = numero;
+        this.numero = String.valueOf(numero);
         this.dataCadastro = dataCadastro;
         this.senha = senha;
     }
 
-    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, String telefone, String cpf, String cidade, String estado, String pais, String endereco, int numero, LocalDate dataCadastro, String senha) {
+    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, String telefone, String cpf, String cidade, String estado, String pais, String endereco, LocalDate dataCadastro, String senha) {
     }
 
     public String getNomeFantasia() {
@@ -68,11 +68,10 @@ public class Fornecedor {
     }
 
     public String getTelefone() {
-        return telefone;
-    }
+        return telefone;}
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setTelefone(int telefone) {
+        this.telefone = String.valueOf(telefone);
     }
 
     public String getCidade() {
@@ -91,9 +90,7 @@ public class Fornecedor {
         this.estado = estado;
     }
 
-    public String getPais() {
-        return pais;
-    }
+    public String getPais() { return pais; }
 
     public void setPais(String pais) {
         this.pais = pais;
@@ -111,8 +108,8 @@ public class Fornecedor {
         return numero;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public void setNumero(int numero) {
+        this.numero = String.valueOf(numero);
     }
 
     public LocalDate getDataCadastro() {

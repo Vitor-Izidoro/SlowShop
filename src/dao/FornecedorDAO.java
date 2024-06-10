@@ -60,18 +60,17 @@ public class FornecedorDAO {
 
     public List<Fornecedor> listarFornecedor() {
         List<Fornecedor> fornecedores = new ArrayList<>();
-        this.query = "SELECT * FROM pessoa";
+        this.query = "SELECT * FROM fornecedor";
         try {
             this.ps = conexao.getConnection().prepareStatement(this.query);
             ResultSet rs = this.ps.executeQuery();
             while (rs.next()) {
                 Fornecedor fornedor = new Fornecedor(
-                        rs.getString("NomeFantasia"),
-                        rs.getString("RazaoSocial"),
-                        rs.getString("CNPJ"),
+                        rs.getString("nomeFantasia"),
+                        rs.getString("razaoSocial"),
+                        rs.getString("cnpj"),
                         rs.getString("email"),
-                        rs.getString("telefone"),
-                        rs.getString("cpf"),
+                        rs.getInt("telefone"),
                         rs.getString("cidade"),
                         rs.getString("estado"),
                         rs.getString("pais"),
@@ -82,7 +81,7 @@ public class FornecedorDAO {
                 );
                 fornecedores.add(fornedor);
             }
-            ps.close();
+            this.ps.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
