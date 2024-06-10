@@ -38,7 +38,19 @@ public class ClienteDAO {
             ex.printStackTrace();
         }
     }
-
+    public boolean deletarCliente(String email) {
+        this.query = "DELETE FROM pessoa WHERE email = ?";
+        try {
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setString(1, email);
+            int rowsAffected = this.ps.executeUpdate();
+            this.ps.close();
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
     public boolean verificarCliente(String email, String senha) {
         this.query = "SELECT * FROM pessoa WHERE email = ? AND senha = ?";
         try {

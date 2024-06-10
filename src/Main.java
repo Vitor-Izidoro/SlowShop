@@ -42,7 +42,12 @@ public class Main {
             System.out.println("(4) Cadastrar Fornecedor");
             System.out.println("(5) Cadastrar Produto");
             System.out.println("(6) Listar Vendedor");
-            System.out.println("(7) Sair");
+            System.out.println("(7) Listar Cliente");
+            System.out.println("(8) Listar Fornecedor");
+            System.out.println("(9) Listar Produto");
+            System.out.println("(10) Deletar Usuario");
+            System.out.println("(11) Sair");
+
 
             if (sc.hasNextInt()) {
                 opcaoMenu = sc.nextInt();
@@ -138,6 +143,7 @@ public class Main {
                         ClienteDAO cDao = new ClienteDAO();
                         cDao.inserirCliente(cliente);
                         System.out.println("Cliente cadastrado com sucesso!");
+                        break;
                     case 4:
                         if (!isAdmin && !isVendedor) {
                             System.out.println("Acesso negado. Apenas administradores podem cadastrar novos administradores.");
@@ -200,6 +206,29 @@ public class Main {
                         }
                         break;
                     case 7:
+                        listarClientes(clienteDAO);
+                        break;
+                    case 8:
+                        listarFornecedores();
+                        break;
+                    case 9:
+                        listarProdutos();
+                        break;
+                    case 10:
+                        if (!isAdmin && !isVendedor) {
+                            System.out.println("Acesso negado. Apenas administradores ou vendedores podem deletar clientes.");
+                            break;
+                        }
+                        System.out.print("Email do Cliente a ser deletado: ");
+                        String emailClienteDeletar = sc.nextLine();
+                        boolean clienteDeletado = clienteDAO.deletarCliente(emailClienteDeletar);
+                        if (clienteDeletado) {
+                            System.out.println("Cliente deletado com sucesso!");
+                        } else {
+                            System.out.println("Falha ao deletar cliente. Verifique se o email está correto.");
+                        }
+                        break;
+                    case 11:
                         System.out.println("Saindo...");
                         sc.close();
                         System.exit(0);
@@ -213,4 +242,5 @@ public class Main {
             }
         }
     }
+
 }
