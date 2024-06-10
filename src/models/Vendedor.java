@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.sql.Date;
 
 public class Vendedor {
-    private int id;
+    private int Id;
     private String nome;
     private String sobrenome;
     private LocalDate dataNascimento;
@@ -20,8 +20,8 @@ public class Vendedor {
     private LocalDate dataCadastro;
 
     // Construtor
-    public Vendedor(int id, String nome, String sobrenome, LocalDate dataNascimento, String telefone, String cpf, String cidade, String estado, String pais, String endereco, int numero, LocalDate dataCadastro, String email, String senha) {
-        this.id = id;
+    public Vendedor(String nome, String sobrenome, LocalDate dataNascimento, String telefone, String cpf, String cidade, String estado, String pais, String endereco, int numero, LocalDate dataCadastro, String email, String senha) {
+        this.Id=Id;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.dataNascimento = dataNascimento;
@@ -38,14 +38,6 @@ public class Vendedor {
     }
 
     // Getters e Setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -148,5 +140,11 @@ public class Vendedor {
 
     public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
+    }
+
+    public int getId(){return Id;}
+
+    public void setId(int Id) {
+        this.Id = Id;
     }
 }

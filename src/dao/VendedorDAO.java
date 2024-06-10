@@ -1,17 +1,11 @@
 package dao;
 
 import models.Vendedor;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.time.LocalDate;
 
-import java.time.LocalDate;
 public class VendedorDAO {
 
     private Conexao conexao;
@@ -21,7 +15,6 @@ public class VendedorDAO {
     public VendedorDAO() {
         conexao = Conexao.getConexao();
     }
-
 
     // Método para inserir um novo vendedor no banco de dados
     public void inserirVendedor(Vendedor vendedor) {
@@ -48,18 +41,15 @@ public class VendedorDAO {
         }
     }
 
-
     public boolean verificarVendedor(String email, String senha) {
         this.query = "SELECT * FROM vendedor WHERE email = ? AND senha = ?";
-        try {
-            this.ps = conexao.getConnection().prepareStatement(this.query);
-            this.ps.setString(1, email);
-            this.ps.setString(2, senha);
-            ResultSet rs = this.ps.executeQuery();
+        try (Connection conn = conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(this.query)) {
+            ps.setString(1, email);
+            ps.setString(2, senha);
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 return true;
             }
-            this.ps.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -68,11 +58,9 @@ public class VendedorDAO {
 
     public boolean deletarVendedor(String email) {
         this.query = "DELETE FROM vendedor WHERE email = ?";
-        try {
-            this.ps = conexao.getConnection().prepareStatement(this.query);
-            this.ps.setString(1, email);
-            int rowsAffected = this.ps.executeUpdate();
-            this.ps.close();
+        try (Connection conn = conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(this.query)) {
+            ps.setString(1, email);
+            int rowsAffected = ps.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -83,12 +71,10 @@ public class VendedorDAO {
     public List<Vendedor> listarVendedores() {
         List<Vendedor> vendedores = new ArrayList<>();
         this.query = "SELECT * FROM vendedor";
-        try {
-            this.ps = conexao.getConnection().prepareStatement(this.query);
-            ResultSet rs = this.ps.executeQuery();
+        try (Connection conn = conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(this.query)) {
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Vendedor vendedor = new Vendedor(
-                        rs.getInt("id_vendedor"),
                         rs.getString("nome"),
                         rs.getString("sobrenome"),
                         rs.getDate("dataNascimento").toLocalDate(),
@@ -105,10 +91,40 @@ public class VendedorDAO {
                 );
                 vendedores.add(vendedor);
             }
-            this.ps.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return vendedores;
+    }
+
+    public Vendedor buscarVendedorPorEmail(String email) {
+        this.query = "SELECT * FROM vendedor WHERE email = ?";
+        Vendedor vendedor = null;
+
+        try (Connection conn = conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(this.query)) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                vendedor = new Vendedor(
+                        rs.getString("nome"),
+                        rs.getString("sobrenome"),
+                        rs.getDate("dataNascimento").toLocalDate(),
+                        rs.getString("telefone"),
+                        rs.getString("cpf"),
+                        rs.getString("cidade"),
+                        rs.getString("estado"),
+                        rs.getString("pais"),
+                        rs.getString("endereco"),
+                        rs.getInt("numero"),
+                        rs.getDate("dataCadastro").toLocalDate(),
+                        rs.getString("email"),
+                        rs.getString("senha")
+                );
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return vendedor;
     }
 }

@@ -1,5 +1,7 @@
 package models;
 
+import java.time.LocalDate;
+
 public class Fornecedor {
     private String nomeFantasia;
     private String razaoSocial;
@@ -11,11 +13,11 @@ public class Fornecedor {
     private String pais;
     private String endereco;
     private String numero;
-    private String dataCadastro;
+    private LocalDate dataCadastro;
     private String senha;
 
-
-    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, String telefone, String cidade, String estado, String pais, String endereco, String numero, String dataCadastro, String senha) {
+    // Construtor completo
+    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, String telefone, String cidade, String estado, String pais, String endereco, String numero, LocalDate dataCadastro, String senha) {
         this.nomeFantasia = nomeFantasia;
         this.razaoSocial = razaoSocial;
         this.cnpj = cnpj;
@@ -30,6 +32,7 @@ public class Fornecedor {
         this.senha = senha;
     }
 
+    // Getters e Setters
     public String getNomeFantasia() {
         return nomeFantasia;
     }
@@ -110,13 +113,14 @@ public class Fornecedor {
         this.numero = numero;
     }
 
-    public String getDataCadastro() {
+    public LocalDate getDataCadastro() {
         return dataCadastro;
     }
 
-    public void setDataCadastro(String dataCadastro) {
+    public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
     }
+
     public String getSenha() {
         return senha;
     }
@@ -125,39 +129,3 @@ public class Fornecedor {
         this.senha = senha;
     }
 }
-/*
-public class Fornecedor {
-    private int id;
-    private String nomeFantasia;
-    private String razaoSocial;
-    private String cnpj;
-    private String email;
-    private String telefone;
-    private String cidade;
-    private String estado;
-    private String pais;
-    private String endereco;
-    private String numero;
-    private String dataCadastro;
-    private String senha;
-
-    // Construtor, getters e setters
-    public Fornecedor(String nomeFantasia, String razaoSocial, String cnpj, String email, String telefone, String cidade, String estado, String pais, String endereco, String numero, String dataCadastro, String senha) {
-        this.nomeFantasia = nomeFantasia;
-        this.razaoSocial = razaoSocial;
-        this.cnpj = cnpj;
-        this.email = email;
-        this.telefone = telefone;
-        this.cidade = cidade;
-        this.estado = estado;
-        this.pais = pais;
-        this.endereco = endereco;
-        this.numero = numero;
-        this.dataCadastro = dataCadastro;
-        this.senha = senha;
-    }
-
-    // getters e setters omitidos por brevidade
-}
-
- */

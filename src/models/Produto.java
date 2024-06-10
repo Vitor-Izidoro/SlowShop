@@ -1,10 +1,19 @@
 package models;
 
 public class Produto {
+    private int id_produto;
     private String descricao;
     private int quantidade;
     private double preco;
     private int fornecedorId;
+
+    public Produto(int id_produto, String descricao, int quantidade, double preco, int fornecedorId) {
+        this.id_produto = id_produto;
+        this.descricao = descricao;
+        this.quantidade = quantidade;
+        this.preco = preco;
+        this.fornecedorId = fornecedorId;
+    }
 
     public Produto(String descricao, int quantidade, double preco, int fornecedorId) {
         this.descricao = descricao;
@@ -44,22 +53,12 @@ public class Produto {
     public void setFornecedorId(int fornecedorId) {
         this.fornecedorId = fornecedorId;
     }
-}
-/*
-public class Produto {
-    private int id;
-    private String descricao;
-    private int quantidade;
-    private double preco;
 
-    // Construtor, getters e setters
-    public Produto(String descricao, int quantidade, double preco) {
-        this.descricao = descricao;
-        this.quantidade = quantidade;
-        this.preco = preco;
+    public int getId_produto() {
+        return id_produto;
     }
 
-    // getters e setters omitidos por brevidade
+    public void setId_produto(int id_produto) {
+        this.id_produto = id_produto;
+    }
 }
-
- */
