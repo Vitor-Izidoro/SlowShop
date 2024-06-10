@@ -396,7 +396,7 @@ public class Main {
                         break;
 
 
-                    case 15:
+                    case 15:/*
                         if (!isVendedor) {
                             System.out.println("Acesso negado. Apenas vendedores podem registrar vendas.");
                             break;
@@ -453,7 +453,7 @@ public class Main {
                         break;
 
 
-
+*/
 
                     case 16:
                         System.out.println("Saindo...");
