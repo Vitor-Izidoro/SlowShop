@@ -2,6 +2,7 @@ package dao;
 
 import models.Cliente;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ClienteDAO {
@@ -36,5 +37,22 @@ public class ClienteDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public boolean verificarCliente(String email, String senha) {
+        this.query = "SELECT * FROM pessoa WHERE email = ? AND senha = ?";
+        try {
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setString(1, email);
+            this.ps.setString(2, senha);
+            ResultSet rs = this.ps.executeQuery();
+            if (rs.next()) {
+                return true; // Cliente encontrado
+            }
+            this.ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return false; // Cliente não encontrado
     }
 }

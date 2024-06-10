@@ -1,12 +1,16 @@
 import dao.AdminDAO;
+import dao.ClienteDAO;
 import dao.VendedorDAO;
 import models.Admin;
+import models.Cliente;
 import models.Vendedor;
 import java.util.Scanner;
 import java.util.List;
 
 public class Main {
     private static boolean isAdmin = false;
+    private static boolean isVendedor = false;
+    private static boolean isCliente = false;
     private static boolean isLoggedIn = false;
     private static String loggedInEmail = "";
 
@@ -19,9 +23,12 @@ public class Main {
 
         AdminDAO adminDAO = new AdminDAO();
         VendedorDAO vendedorDAO = new VendedorDAO();
+        ClienteDAO clienteDAO = new ClienteDAO();
 
         isAdmin = adminDAO.verificarAdmin(email, senha);
-        isLoggedIn = isAdmin || vendedorDAO.verificarVendedor(email, senha);
+        isVendedor = vendedorDAO.verificarVendedor(email, senha);
+        isCliente = clienteDAO.verificarCliente(email, senha);
+        isLoggedIn = isAdmin || isVendedor || isCliente;
         loggedInEmail = isLoggedIn ? email : "";
 
         if (!isLoggedIn) {
@@ -46,6 +53,10 @@ public class Main {
 
                 switch (opcaoMenu) {
                     case 1:
+                        if (!isAdmin) {
+                            System.out.println("Acesso negado. Apenas administradores podem cadastrar novos administradores.");
+                            break;
+                        }
                         System.out.print("Nome do Admin: ");
                         String nomeAdmin = sc.nextLine();
                         System.out.print("Email do Admin: ");
@@ -58,6 +69,10 @@ public class Main {
                         System.out.println("Admin cadastrado com sucesso!");
                         break;
                     case 2:
+                        if (!isAdmin) {
+                            System.out.println("Acesso negado. Apenas administradores podem cadastrar novos administradores.");
+                            break;
+                        }
                         System.out.print("Nome: ");
                         String nome = sc.nextLine();
                         System.out.print("Sobrenome: ");
@@ -90,6 +105,38 @@ public class Main {
                         vendedorDAO.inserirVendedor(vendedor);
                         System.out.println("Vendedor cadastrado com sucesso!");
                         break;
+                    case 3:
+                        System.out.print("Nome: ");
+                        String nomeCliente = sc.nextLine();
+                        System.out.print("Sobrenome: ");
+                        String sobrenomeCliente = sc.nextLine();
+                        System.out.print("Data de Nascimento: ");
+                        String dataNascimentoCliente = sc.nextLine();
+                        System.out.print("Telefone: ");
+                        String telefoneCliente = sc.nextLine();
+                        System.out.print("CPF: ");
+                        String cpfCliente = sc.nextLine();
+                        System.out.print("Cidade: ");
+                        String cidadeCliente = sc.nextLine();
+                        System.out.print("Estado: ");
+                        String estadoCliente = sc.nextLine();
+                        System.out.print("País: ");
+                        String paisCliente = sc.nextLine();
+                        System.out.print("Endereço: ");
+                        String enderecoCliente = sc.nextLine();
+                        System.out.print("Número: ");
+                        String numeroCliente = sc.nextLine();
+                        System.out.print("Email: ");
+                        String emailCliente = sc.nextLine();
+                        System.out.print("Senha: ");
+                        String senhaCliente = sc.nextLine();
+                        System.out.print("Data de Cadastro: ");
+                        String dataCadastroCliente = sc.nextLine();
+
+                        Cliente cliente = new Cliente(nomeCliente, sobrenomeCliente, dataNascimentoCliente, telefoneCliente, cpfCliente, cidadeCliente, estadoCliente, paisCliente, enderecoCliente, numeroCliente, emailCliente, senhaCliente, dataCadastroCliente);
+                        ClienteDAO cDao = new ClienteDAO();
+                        cDao.inserirCliente(cliente);
+                        System.out.println("Cliente cadastrado com sucesso!");
                     case 6:
                         List<Vendedor> vendedores = vendedorDAO.listarVendedores(loggedInEmail, isAdmin);
                         for (Vendedor v : vendedores) {
