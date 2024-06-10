@@ -4,6 +4,11 @@ import models.Cliente;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import models.Cliente;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ClienteDAO {
 
@@ -67,4 +72,35 @@ public class ClienteDAO {
         }
         return false; // Cliente não encontrado
     }
+    public List<Cliente> listarClientes() {
+        List<Cliente> clientes = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM clientes";
+            Statement stmt = conexao.getConnection().createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                Cliente cliente = new Cliente(
+                        rs.getString("nome"),
+                        rs.getString("sobrenome"),
+                        rs.getString("data_nascimento"),
+                        rs.getString("telefone"),
+                        rs.getString("cpf"),
+                        rs.getString("cidade"),
+                        rs.getString("estado"),
+                        rs.getString("pais"),
+                        rs.getString("endereco"),
+                        rs.getString("numero"),
+                        rs.getString("email"),
+                        rs.getString("senha"),
+                        rs.getString("data_cadastro")
+                );
+                clientes.add(cliente);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return clientes;
+    }
+}
 }

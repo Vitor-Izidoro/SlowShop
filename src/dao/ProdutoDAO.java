@@ -3,6 +3,11 @@ package dao;
 import models.Produto;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import models.Cliente;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ProdutoDAO {
 

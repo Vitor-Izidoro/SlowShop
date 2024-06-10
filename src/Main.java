@@ -11,6 +11,34 @@ public class Main {
     private static boolean isLoggedIn = false;
     private static String loggedInEmail = "";
 
+    private static void listarClientes(ClienteDAO clienteDAO) {
+        List<Cliente> clientes = clienteDAO.listarClientes();
+        for (Cliente cliente : clientes) {
+            System.out.println(cliente.getNome() + " " + cliente.getSobrenome());
+        }
+    }
+
+    private static void listarFornecedores(FornecedorDAO fornecedorDAO) {
+        List<Fornecedor> fornecedores = fornecedorDAO.listarFornecedores();
+        for (Fornecedor fornecedor : fornecedores) {
+            System.out.println(fornecedor.getNomeFantasia());
+        }
+    }
+
+    private static void listarProdutos(ProdutoDAO produtoDAO) {
+        List<Produto> produtos = produtoDAO.listarProdutos();
+        for (Produto produto : produtos) {
+            System.out.println(produto.getDescricao());
+        }
+    }
+
+    private static void listarVendedores(VendedorDAO vendedorDAO) {
+        List<Vendedor> vendedores = vendedorDAO.listarVendedores();
+        for (Vendedor vendedor : vendedores) {
+            System.out.println(vendedor.getNome() + " " + vendedor.getSobrenome());
+        }
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.print("Email: ");
