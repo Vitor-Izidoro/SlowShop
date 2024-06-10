@@ -1,9 +1,6 @@
-import dao.AdminDAO;
-import dao.ClienteDAO;
-import dao.VendedorDAO;
-import models.Admin;
-import models.Cliente;
-import models.Vendedor;
+import dao.*;
+import models.*;
+
 import java.util.Scanner;
 import java.util.List;
 
@@ -106,6 +103,10 @@ public class Main {
                         System.out.println("Vendedor cadastrado com sucesso!");
                         break;
                     case 3:
+                        if (!isAdmin && !isVendedor) {
+                            System.out.println("Acesso negado. Apenas administradores podem cadastrar novos administradores.");
+                            break;
+                        }
                         System.out.print("Nome: ");
                         String nomeCliente = sc.nextLine();
                         System.out.print("Sobrenome: ");
@@ -137,6 +138,61 @@ public class Main {
                         ClienteDAO cDao = new ClienteDAO();
                         cDao.inserirCliente(cliente);
                         System.out.println("Cliente cadastrado com sucesso!");
+                    case 4:
+                        if (!isAdmin && !isVendedor) {
+                            System.out.println("Acesso negado. Apenas administradores podem cadastrar novos administradores.");
+                            break;
+                        }
+                        System.out.print("Nome Fantasia: ");
+                        String nomeFantasia = sc.nextLine();
+                        System.out.print("Razão Social: ");
+                        String razaoSocial = sc.nextLine();
+                        System.out.print("CNPJ: ");
+                        String cnpj = sc.nextLine();
+                        System.out.print("Email: ");
+                        String emailFornecedor = sc.nextLine();
+                        System.out.print("Telefone: ");
+                        String telefoneFornecedor = sc.nextLine();
+                        System.out.print("Cidade: ");
+                        String cidadeFornecedor = sc.nextLine();
+                        System.out.print("Estado: ");
+                        String estadoFornecedor = sc.nextLine();
+                        System.out.print("País: ");
+                        String paisFornecedor = sc.nextLine();
+                        System.out.print("Endereço: ");
+                        String enderecoFornecedor = sc.nextLine();
+                        System.out.print("Número: ");
+                        String numeroFornecedor = sc.nextLine();
+                        System.out.print("Data de Cadastro: ");
+                        String dataCadastroFornecedor = sc.nextLine();
+
+                        Fornecedor fornecedor = new Fornecedor(nomeFantasia, razaoSocial, cnpj, emailFornecedor, telefoneFornecedor, cidadeFornecedor, estadoFornecedor, paisFornecedor, enderecoFornecedor, numeroFornecedor, dataCadastroFornecedor, senha);
+                        FornecedorDAO fDao = new FornecedorDAO();
+                        fDao.inserirFornecedor(fornecedor);
+                        System.out.println("Fornecedor cadastrado com sucesso!");
+                        break;
+                    case 5:
+                        if (!isAdmin && !isVendedor) {
+                            System.out.println("Acesso negado. Apenas administradores podem cadastrar novos administradores.");
+                            break;
+                        }
+                        System.out.print("Descrição: ");
+                        String descricao = sc.nextLine();
+                        System.out.print("Quantidade: ");
+                        int quantidade = sc.nextInt();
+                        sc.nextLine(); // Consume the newline character
+                        System.out.print("Preço: ");
+                        double preco = sc.nextDouble();
+                        sc.nextLine(); // Consume the newline character
+                        System.out.print("Fornecedor: ");
+                        int fornecedorId = sc.nextInt();
+                        sc.nextLine(); // Consume the newline character
+
+                        Produto produto = new Produto(descricao, quantidade, preco, fornecedorId);
+                        ProdutoDAO pDao = new ProdutoDAO();
+                        pDao.inserirProduto(produto);
+                        System.out.println("Produto cadastrado com sucesso!");
+                        break;
                     case 6:
                         List<Vendedor> vendedores = vendedorDAO.listarVendedores(loggedInEmail, isAdmin);
                         for (Vendedor v : vendedores) {
