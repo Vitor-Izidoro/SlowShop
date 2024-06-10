@@ -36,6 +36,19 @@ public class FornecedorDAO {
             ex.printStackTrace();
         }
     }
+    public boolean deletarFornecedor(String email) {
+        this.query = "DELETE FROM fornecedor WHERE email = ?";
+        try {
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setString(1, email);
+            int rowsAffected = this.ps.executeUpdate();
+            this.ps.close();
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 
 }
 /*import models.Fornecedor;

@@ -1,22 +1,27 @@
 package models;
 
+import java.time.LocalDate;
+import java.sql.Date;
+
 public class Vendedor {
+    private int id;
     private String nome;
     private String sobrenome;
-    private String dataNascimento;
+    private LocalDate dataNascimento;
     private String telefone;
     private String cpf;
     private String cidade;
     private String estado;
     private String pais;
     private String endereco;
-    private String dataCadastro;
+    private int numero;
     private String email;
     private String senha;
-    private int numero; // Adicione esta linha
+    private LocalDate dataCadastro;
 
-    // Atualize o construtor para incluir o campo numero
-    public Vendedor(String nome, String sobrenome, String dataNascimento, String telefone, String cpf, String cidade, String estado, String pais, String endereco, int numero, String dataCadastro, String email, String senha) {
+    // Construtor
+    public Vendedor(int id, String nome, String sobrenome, LocalDate dataNascimento, String telefone, String cpf, String cidade, String estado, String pais, String endereco, int numero, LocalDate dataCadastro, String email, String senha) {
+        this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.dataNascimento = dataNascimento;
@@ -26,10 +31,19 @@ public class Vendedor {
         this.estado = estado;
         this.pais = pais;
         this.endereco = endereco;
-        this.numero = numero; // Adicione esta linha
+        this.numero = numero;
         this.dataCadastro = dataCadastro;
         this.email = email;
         this.senha = senha;
+    }
+
+    // Getters e Setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -48,11 +62,11 @@ public class Vendedor {
         this.sobrenome = sobrenome;
     }
 
-    public String getDataNascimento() {
+    public LocalDate getDataNascimento() {
         return dataNascimento;
     }
 
-    public void setDataNascimento(String dataNascimento) {
+    public void setDataNascimento(LocalDate dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
 
@@ -104,12 +118,12 @@ public class Vendedor {
         this.endereco = endereco;
     }
 
-    public String getDataCadastro() {
-        return dataCadastro;
+    public int getNumero() {
+        return numero;
     }
 
-    public void setDataCadastro(String dataCadastro) {
-        this.dataCadastro = dataCadastro;
+    public void setNumero(int numero) {
+        this.numero = numero;
     }
 
     public String getEmail() {
@@ -127,11 +141,12 @@ public class Vendedor {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    public int getNumero() {
-        return numero;
+
+    public LocalDate getDataCadastro() {
+        return dataCadastro;
     }
 
-    public void setNumero(int numero) {
-        this.numero = numero;
+    public void setDataCadastro(LocalDate dataCadastro) {
+        this.dataCadastro = dataCadastro;
     }
 }

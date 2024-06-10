@@ -4,6 +4,11 @@ import models.Cliente;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import models.Cliente;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class ClienteDAO {
 
@@ -16,22 +21,22 @@ public class ClienteDAO {
     }
 
     public void inserirCliente(Cliente cliente) {
-        this.query = "INSERT INTO pessoa (nome, sobrenome, dataNascimento, telefone, cpf, cidade, estado, pais, endereco, numero, email, senha, dataCadastro) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        this.query = "INSERT INTO pessoa (nome, sobrenome, dataNascimento, telefone, cpf, cidade, estado, pais, endereco, numero, dataCadastro, email, senha) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             this.ps = conexao.getConnection().prepareStatement(this.query);
             this.ps.setString(1, cliente.getNome());
             this.ps.setString(2, cliente.getSobrenome());
-            this.ps.setString(3, cliente.getDataNascimento());
-            this.ps.setString(4, cliente.getTelefone());
-            this.ps.setString(5, cliente.getCpf());
+            this.ps.setDate(3, Date.valueOf(cliente.getDataNascimento())); // Conversão de LocalDate para Date
+            this.ps.setInt(4, Integer.parseInt(cliente.getTelefone()));
+            this.ps.setInt(5, Integer.parseInt(cliente.getCpf()));
             this.ps.setString(6, cliente.getCidade());
             this.ps.setString(7, cliente.getEstado());
             this.ps.setString(8, cliente.getPais());
             this.ps.setString(9, cliente.getEndereco());
-            this.ps.setString(10, cliente.getNumero());
-            this.ps.setString(11, cliente.getEmail());
-            this.ps.setString(12, cliente.getSenha());
-            this.ps.setString(13, cliente.getDataCadastro());
+            this.ps.setInt(10, cliente.getNumero());
+            this.ps.setDate(11, Date.valueOf(cliente.getDataCadastro())); // Conversão de LocalDate para Date
+            this.ps.setString(12, cliente.getEmail());
+            this.ps.setString(13, cliente.getSenha());
             this.ps.executeUpdate();
             this.ps.close();
         } catch (SQLException ex) {
@@ -51,20 +56,80 @@ public class ClienteDAO {
             return false;
         }
     }
-    public boolean verificarCliente(String email, String senha) {
-        this.query = "SELECT * FROM pessoa WHERE email = ? AND senha = ?";
+    public List<Cliente> listarCliente() {
+        List<Cliente> clientes = new ArrayList<>();
+        this.query = "SELECT * FROM pessoa";
         try {
             this.ps = conexao.getConnection().prepareStatement(this.query);
-            this.ps.setString(1, email);
-            this.ps.setString(2, senha);
             ResultSet rs = this.ps.executeQuery();
-            if (rs.next()) {
-                return true; // Cliente encontrado
+            while (rs.next()) {
+                Cliente cliente = new Cliente(
+                        rs.getInt("id_pessoa"),
+                        rs.getString("nome"),
+                        rs.getString("sobrenome"),
+                        rs.getDate("dataNascimento").toLocalDate(),
+                        rs.getString("telefone"),
+                        rs.getString("cpf"),
+                        rs.getString("cidade"),
+                        rs.getString("estado"),
+                        rs.getString("pais"),
+                        rs.getString("endereco"),
+                        rs.getInt("numero"),
+                        rs.getDate("dataCadastro").toLocalDate(),
+                        rs.getString("email"),
+                        rs.getString("senha")
+                );
+                clientes.add(cliente);
             }
-            this.ps.close();
+            ps.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return false; // Cliente não encontrado
+        return clientes;
     }
+
+    public boolean verificarCliente(String email, String senha) {
+        this.query = "SELECT * FROM pessoa WHERE email = ?";
+        try {
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setString(1, email);
+            ResultSet rs = this.ps.executeQuery();
+            boolean found = rs.next(); // Verifica se há resultados
+            this.ps.close();
+            return found; // Retorna true se o cliente foi encontrado
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false; // Cliente não encontrado
+        }
+    }
+
+    public boolean editarCliente(String email, Cliente cliente) {
+        this.query = "UPDATE pessoa SET nome = ?, sobrenome = ?, dataNascimento = ?, telefone = ?, cpf = ?, cidade = ?, estado = ?, pais = ?, endereco = ?, numero = ?, dataCadastro = ?, senha = ? WHERE email = ?";
+        try {
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setString(1, cliente.getNome());
+            this.ps.setString(2, cliente.getSobrenome());
+            this.ps.setDate(3, Date.valueOf(cliente.getDataNascimento())); // Convertendo LocalDate para Date
+            this.ps.setString(4, cliente.getTelefone());
+            this.ps.setString(5, cliente.getCpf());
+            this.ps.setString(6, cliente.getCidade());
+            this.ps.setString(7, cliente.getEstado());
+            this.ps.setString(8, cliente.getPais());
+            this.ps.setString(9, cliente.getEndereco());
+            this.ps.setInt(10, cliente.getNumero());
+            this.ps.setDate(11, Date.valueOf(cliente.getDataCadastro())); // Convertendo LocalDate para Date
+            this.ps.setString(12, cliente.getSenha());
+            this.ps.setString(13, email); // Utilize o email como critério de atualização
+            int rowsAffected = this.ps.executeUpdate();
+            this.ps.close();
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+
+
 }
+
