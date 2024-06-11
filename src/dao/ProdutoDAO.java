@@ -80,7 +80,21 @@ public class ProdutoDAO {
     }
 
 
-    public boolean atualizarProduto(Produto produto) {
+    public boolean verificarProduto(int id, String senha)  {
+        this.query = "SELECT * FROM pessoa WHERE email = ?";
+        try (Connection conn = conexao.getConnection();
+             PreparedStatement ps = conn.prepareStatement(this.query)) {
+            ps.setString(1, String.valueOf(id));
+            try (ResultSet rs = ps.executeQuery()) {
+                return rs.next(); // Verifica se há resultados
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false; // Cliente não encontrado
+        }
+    }
+
+    public boolean atualizarProduto(int id, Produto produto) {
         this.query = "UPDATE produto SET descricao = ?, quantidade = ?, preco = ?, id_fornecedor = ? WHERE id_produto = ?";
         Connection conn = null;
         int rowsAffected = 0;
@@ -106,6 +120,7 @@ public class ProdutoDAO {
         }
         return rowsAffected > 0;
     }
+
     // Método para atualizar a quantidade do produto
     public boolean atualizarQuantidadeProduto(int id_produto, int novaQuantidade) {
         this.query = "UPDATE produto SET quantidade = ? WHERE id_produto = ?";
