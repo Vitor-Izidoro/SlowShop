@@ -401,33 +401,33 @@ public class Main {
                         }
                         System.out.println("Registrar Venda:");
 
-                        // Solicitar ID do Cliente
+// Solicitar ID do Cliente
                         System.out.print("ID do Cliente: ");
                         int clienteId = sc.nextInt();
                         sc.nextLine(); // Consumir a quebra de linha
 
-                        // Solicitar ID do Produto
+// Solicitar ID do Produto
                         System.out.print("ID do Produto: ");
                         int produtoId = sc.nextInt();
                         sc.nextLine(); // Consumir a quebra de linha
 
-                        // Solicitar quantidade do produto
+// Solicitar quantidade do produto
                         System.out.print("Quantidade: ");
                         int vendaquantidade = sc.nextInt();
                         sc.nextLine(); // Consumir a quebra de linha
 
-                        // Buscar o produto para obter o preço
+// Buscar o produto para obter o preço
                         Produto vendaproduto = produtoDAO.buscarProdutoPorId(produtoId);
                         if (vendaproduto == null || vendaproduto.getQuantidade() < vendaquantidade) {
                             System.out.println("Produto não encontrado ou quantidade insuficiente em estoque.");
                             break;
                         }
 
-                        // Calcular o total da compra
+// Calcular o total da compra
                         double precoProduto = vendaproduto.getPreco();
                         double total = precoProduto * vendaquantidade;
 
-                        // Solicitar tipo de pagamento
+// Solicitar tipo de pagamento
                         System.out.println("Tipo de Pagamento:");
                         System.out.println("(1) Crédito");
                         System.out.println("(2) Débito");
@@ -439,19 +439,27 @@ public class Main {
                             parcelas = sc.nextInt();
                         }
 
-                        // Obter o ID do vendedor logado
+// Obter o ID do vendedor logado
                         int vendedorId = vendedorDAO.getVendedorLogado().getId();
 
-                        // Registrar a venda no banco de dados
+// Registrar a venda no banco de dados
                         Vendas venda = new Vendas(0, clienteId, vendedorId, java.time.LocalDate.now().toString(), tipoPagamento, parcelas, total);
-
                         vendasDAO.inserirVenda(venda);
-                        System.out.println("Venda registrada com sucesso!");
+
+// Atualizar a quantidade do produto no estoque
+                        int novaQuantidade = vendaproduto.getQuantidade() - vendaquantidade;
+                        boolean atualizado = produtoDAO.atualizarQuantidadeProduto(produtoId, novaQuantidade);
+                        if (atualizado) {
+                            System.out.println("Venda registrada com sucesso e quantidade do produto atualizada!");
+                        } else {
+                            System.out.println("Erro ao atualizar a quantidade do produto.");
+                        }
                         break;
 
 
 
-                case 16:
+
+                    case 16:
                         System.out.println("Saindo...");
                         sc.close();
                         System.exit(0);

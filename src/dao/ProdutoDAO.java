@@ -79,6 +79,7 @@ public class ProdutoDAO {
         return produto;
     }
 
+
     public boolean atualizarProduto(Produto produto) {
         this.query = "UPDATE produto SET descricao = ?, quantidade = ?, preco = ?, id_fornecedor = ? WHERE id_produto = ?";
         Connection conn = null;
@@ -105,4 +106,18 @@ public class ProdutoDAO {
         }
         return rowsAffected > 0;
     }
+    // Método para atualizar a quantidade do produto
+    public boolean atualizarQuantidadeProduto(int id_produto, int novaQuantidade) {
+        this.query = "UPDATE produto SET quantidade = ? WHERE id_produto = ?";
+        try (Connection conn = conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(this.query)) {
+            ps.setInt(1, novaQuantidade);
+            ps.setInt(2, id_produto);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }
+
