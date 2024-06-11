@@ -394,9 +394,7 @@ public class Main {
                             System.out.println("Cliente não encontrado.");
                         }
                         break;
-
-
-                    case 15:/*
+                    case 15:
                         if (!isVendedor) {
                             System.out.println("Acesso negado. Apenas vendedores podem registrar vendas.");
                             break;
@@ -441,21 +439,19 @@ public class Main {
                             parcelas = sc.nextInt();
                         }
 
+                        // Obter o ID do vendedor logado
+                        int vendedorId = vendedorDAO.getVendedorLogado().getId();
+
                         // Registrar a venda no banco de dados
-                        Vendas venda = new Vendas(clienteId, vendedorLogado.getId(), java.time.LocalDate.now().toString(), tipoPagamento, parcelas, total);
+                        Vendas venda = new Vendas(0, clienteId, vendedorId, java.time.LocalDate.now().toString(), tipoPagamento, parcelas, total);
+
                         vendasDAO.inserirVenda(venda);
-
-                        // Atualizar a quantidade do produto no estoque
-                        vendaproduto.setQuantidade(vendaproduto.getQuantidade() - vendaquantidade);
-                        produtoDAO.atualizarProduto(vendaproduto);
-
-                        System.out.println("Venda registrada com sucesso.");
+                        System.out.println("Venda registrada com sucesso!");
                         break;
 
 
-*/
 
-                    case 16:
+                case 16:
                         System.out.println("Saindo...");
                         sc.close();
                         System.exit(0);

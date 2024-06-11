@@ -16,7 +16,7 @@ public class VendasDAO {
         this.query = "INSERT INTO vendas (cliente_id, vendedor_id, data, pagamento, parcelas, total) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(this.query)) {
             ps.setInt(1, venda.getClienteId());
-            ps.setInt(2, venda.getVendedorId());
+            ps.setInt(2, venda.getVendedorId()); // Certifique-se de que o vendedorId esteja sendo passado corretamente aqui
             ps.setString(3, venda.getData());
             ps.setInt(4, venda.getPagamento());
             ps.setDouble(5, venda.getParcelas());
@@ -38,4 +38,5 @@ public class VendasDAO {
             return false;
         }
     }
+
 }

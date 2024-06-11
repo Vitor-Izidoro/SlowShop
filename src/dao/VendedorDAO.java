@@ -12,6 +12,8 @@ public class VendedorDAO {
     private String query;
     private PreparedStatement ps;
 
+    private static Vendedor vendedorLogado; // Variável estática para armazenar o vendedor logado
+
     public VendedorDAO() {
         conexao = Conexao.getConexao();
     }
@@ -24,8 +26,8 @@ public class VendedorDAO {
             this.ps.setString(1, vendedor.getNome());
             this.ps.setString(2, vendedor.getSobrenome());
             this.ps.setDate(3, Date.valueOf(vendedor.getDataNascimento())); // Conversão de LocalDate para Date
-            this.ps.setInt(4, Integer.parseInt(vendedor.getTelefone()));
-            this.ps.setInt(5, Integer.parseInt(vendedor.getCpf()));
+            this.ps.setString(4, vendedor.getTelefone());
+            this.ps.setString(5, vendedor.getCpf());
             this.ps.setString(6, vendedor.getCidade());
             this.ps.setString(7, vendedor.getEstado());
             this.ps.setString(8, vendedor.getPais());
@@ -41,6 +43,12 @@ public class VendedorDAO {
         }
     }
 
+    // Método para definir o vendedor logado
+    public static void setVendedorLogado(Vendedor vendedor) {
+        vendedorLogado = vendedor;
+    }
+
+    // Método para verificar o vendedor
     public boolean verificarVendedor(String email, String senha) {
         this.query = "SELECT * FROM vendedor WHERE email = ? AND senha = ?";
         try (Connection conn = conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(this.query)) {
@@ -48,12 +56,32 @@ public class VendedorDAO {
             ps.setString(2, senha);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
+                vendedorLogado = new Vendedor(
+                        rs.getString("nome"),
+                        rs.getString("sobrenome"),
+                        rs.getDate("dataNascimento").toLocalDate(),
+                        rs.getString("telefone"),
+                        rs.getString("cpf"),
+                        rs.getString("cidade"),
+                        rs.getString("estado"),
+                        rs.getString("pais"),
+                        rs.getString("endereco"),
+                        rs.getInt("numero"),
+                        rs.getDate("dataCadastro").toLocalDate(),
+                        rs.getString("email"),
+                        rs.getString("senha")
+                );
                 return true;
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return false;
+    }
+
+    // Método para obter o vendedor logado
+    public static Vendedor getVendedorLogado() {
+        return vendedorLogado;
     }
 
     public boolean deletarVendedor(String email) {
@@ -127,4 +155,6 @@ public class VendedorDAO {
         }
         return vendedor;
     }
+
+
 }
