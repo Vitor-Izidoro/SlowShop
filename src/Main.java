@@ -396,60 +396,35 @@ public class Main {
                         break;
 
 
-                    case 15:/*
+                    case 15:
                         if (!isVendedor) {
-                            System.out.println("Acesso negado. Apenas vendedores podem registrar vendas.");
+                            System.out.println("Acesso negado. Apenas administradores e vendedores podem cadastrar novos fornecedores.");
                             break;
                         }
-                        System.out.println("Registrar Venda:");
+                        System.out.print("insira o id do cliente: ");
+                        int id_cliente = sc.nextInt();
+                        System.out.print("insira o id do vendedor: ");
+                        int id_vendedor = sc.nextInt();
+                        System.out.print("insira o id do produto: ");
+                        int id_produto = sc.nextInt();
+                        LocalDate dataCadastroFornecedor = LocalDate.now(); // Definindo a data de cadastro como a data atual
+                        System.out.print("--- selecione o método de pagamento --- ");
+                        System.out.print("(1) crédito");
+                        System.out.print("(2) débito");
+                        System.out.print("(3) dinheiro");
+                        int pagamento = sc.nextInt();
+                         if (pagamento == 1 && ){
+                             System.out.print("quantas parcelas");
+                             int id_cliente = sc.nextInt();
+                         }
+                        System.out.print("insira o id do cliente: ");
+                        int id_cliente = sc.nextInt();
 
-                        // Solicitar ID do Cliente
-                        System.out.print("ID do Cliente: ");
-                        int clienteId = sc.nextInt();
-                        sc.nextLine(); // Consumir a quebra de linha
+                        System.out.println("Debug Info: Nome Fantasia = " + nomeFantasia); // Debug statement
 
-                        // Solicitar ID do Produto
-                        System.out.print("ID do Produto: ");
-                        int produtoId = sc.nextInt();
-                        sc.nextLine(); // Consumir a quebra de linha
-
-                        // Solicitar quantidade do produto
-                        System.out.print("Quantidade: ");
-                        int vendaquantidade = sc.nextInt();
-                        sc.nextLine(); // Consumir a quebra de linha
-
-                        // Buscar o produto para obter o preço
-                        Produto vendaproduto = produtoDAO.buscarProdutoPorId(produtoId);
-                        if (vendaproduto == null || vendaproduto.getQuantidade() < vendaquantidade) {
-                            System.out.println("Produto não encontrado ou quantidade insuficiente em estoque.");
-                            break;
-                        }
-
-                        // Calcular o total da compra
-                        double precoProduto = vendaproduto.getPreco();
-                        double total = precoProduto * vendaquantidade;
-
-                        // Solicitar tipo de pagamento
-                        System.out.println("Tipo de Pagamento:");
-                        System.out.println("(1) Crédito");
-                        System.out.println("(2) Débito");
-                        System.out.println("(3) Dinheiro");
-                        int tipoPagamento = sc.nextInt();
-                        double parcelas = 1; // Número padrão de parcelas é 1
-                        if (tipoPagamento == 1) { // Se o pagamento for em crédito
-                            System.out.print("Número de parcelas: ");
-                            parcelas = sc.nextInt();
-                        }
-
-                        // Registrar a venda no banco de dados
-                        Vendas venda = new Vendas(clienteId, vendedorLogado.getId(), java.time.LocalDate.now().toString(), tipoPagamento, parcelas, total);
-                        vendasDAO.inserirVenda(venda);
-
-                        // Atualizar a quantidade do produto no estoque
-                        vendaproduto.setQuantidade(vendaproduto.getQuantidade() - vendaquantidade);
-                        produtoDAO.atualizarProduto(vendaproduto);
-
-                        System.out.println("Venda registrada com sucesso.");
+                        Fornecedor fornecedor = new Fornecedor(nomeFantasia, razaoSocial, cnpj, emailFornecedor, telefoneFornecedor, cidadeFornecedor, estadoFornecedor, paisFornecedor, enderecoFornecedor, numeroFornecedor, dataCadastroFornecedor, senhaFornecedor);
+                        fornecedorDAO.inserirFornecedor(fornecedor);
+                        System.out.println("Fornecedor cadastrado com sucesso!");
                         break;
 
 

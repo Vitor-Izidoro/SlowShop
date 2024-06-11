@@ -12,15 +12,16 @@ public class VendasDAO {
         conexao = Conexao.getConexao();
     }
 
-    public void inserirVenda(Vendas venda) {
-        this.query = "INSERT INTO vendas (cliente_id, vendedor_id, data, pagamento, parcelas, total) VALUES (?, ?, ?, ?, ?, ?)";
+    public void inserirVendas(Vendas venda) {
+        this.query = "INSERT INTO vendas (id_cliente, id_vendedor, id_produto, dataPagamento, pagamento, parcelas, total) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(this.query)) {
             ps.setInt(1, venda.getClienteId());
             ps.setInt(2, venda.getVendedorId());
-            ps.setString(3, venda.getData());
-            ps.setInt(4, venda.getPagamento());
-            ps.setDouble(5, venda.getParcelas());
-            ps.setDouble(6, venda.getTotal());
+            ps.setInt(3, venda.getVendedorId());
+            ps.setString(4, venda.getData());
+            ps.setInt(5, venda.getPagamento());
+            ps.setDouble(6, venda.getParcelas());
+            ps.setDouble(7, venda.getTotal());
             ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
