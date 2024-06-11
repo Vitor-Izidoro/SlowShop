@@ -88,11 +88,10 @@ public class ClienteDAO {
     }
 
     public boolean verificarCliente(String email, String senha) {
-        this.query = "SELECT * FROM pessoa WHERE email = ? AND senha = ?";
+        this.query = "SELECT * FROM pessoa WHERE email = ?";
         try (Connection conn = conexao.getConnection();
              PreparedStatement ps = conn.prepareStatement(this.query)) {
             ps.setString(1, email);
-            ps.setString(2, senha);
             try (ResultSet rs = ps.executeQuery()) {
                 return rs.next(); // Verifica se há resultados
             }
