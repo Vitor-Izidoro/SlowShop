@@ -57,6 +57,7 @@ public class VendedorDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 vendedorLogado = new Vendedor(
+                        rs.getInt("id_vendedor"),
                         rs.getString("nome"),
                         rs.getString("sobrenome"),
                         rs.getDate("dataNascimento").toLocalDate(),
@@ -78,6 +79,7 @@ public class VendedorDAO {
         }
         return false;
     }
+
 
     // Método para obter o vendedor logado
     public static Vendedor getVendedorLogado() {
@@ -103,6 +105,7 @@ public class VendedorDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Vendedor vendedor = new Vendedor(
+                        rs.getInt("id_vendedor"),
                         rs.getString("nome"),
                         rs.getString("sobrenome"),
                         rs.getDate("dataNascimento").toLocalDate(),
@@ -125,6 +128,7 @@ public class VendedorDAO {
         return vendedores;
     }
 
+
     public Vendedor buscarVendedorPorEmail(String email) {
         this.query = "SELECT * FROM vendedor WHERE email = ?";
         Vendedor vendedor = null;
@@ -135,6 +139,7 @@ public class VendedorDAO {
 
             if (rs.next()) {
                 vendedor = new Vendedor(
+                        rs.getInt("id_vendedor"),
                         rs.getString("nome"),
                         rs.getString("sobrenome"),
                         rs.getDate("dataNascimento").toLocalDate(),
@@ -155,6 +160,7 @@ public class VendedorDAO {
         }
         return vendedor;
     }
+
 
 
 }
