@@ -180,7 +180,7 @@ public class Main {
                         System.out.print("Senha: ");
                         String senhaVendedor = sc.nextLine();
 
-                        Vendedor vendedor = new Vendedor(nome, sobrenome, dataNascimento, telefone, cpf, cidade, estado, pais, endereco, numero, dataCadastro, emailVendedor, senhaVendedor);
+                        Vendedor vendedor = new Vendedor( nome, sobrenome, dataNascimento, telefone, cpf, cidade, estado, pais, endereco, numero, dataCadastro, emailVendedor, senhaVendedor);
                         vendedorDAO.inserirVendedor(vendedor);
                         System.out.println("Vendedor cadastrado com sucesso!");
                         break;

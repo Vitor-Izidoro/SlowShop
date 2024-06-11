@@ -1,7 +1,6 @@
 package models;
 
 import java.time.LocalDate;
-import java.sql.Date;
 
 public class Vendedor {
     private int Id;
@@ -19,9 +18,9 @@ public class Vendedor {
     private String senha;
     private LocalDate dataCadastro;
 
-    // Construtor
-    public Vendedor(String nome, String sobrenome, LocalDate dataNascimento, String telefone, String cpf, String cidade, String estado, String pais, String endereco, int numero, LocalDate dataCadastro, String email, String senha) {
-        this.Id=Id;
+    // Construtor principal
+    public Vendedor(int Id, String nome, String sobrenome, LocalDate dataNascimento, String telefone, String cpf, String cidade, String estado, String pais, String endereco, int numero, LocalDate dataCadastro, String email, String senha) {
+        this.Id = Id;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.dataNascimento = dataNascimento;
@@ -37,7 +36,20 @@ public class Vendedor {
         this.senha = senha;
     }
 
+    // Construtor secundário sem o Id
+    public Vendedor(String nome, String sobrenome, LocalDate dataNascimento, String telefone, String cpf, String cidade, String estado, String pais, String endereco, int numero, LocalDate dataCadastro, String email, String senha) {
+        this(0, nome, sobrenome, dataNascimento, telefone, cpf, cidade, estado, pais, endereco, numero, dataCadastro, email, senha);
+    }
+
     // Getters e Setters
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int Id) {
+        this.Id = Id;
+    }
+
     public String getNome() {
         return nome;
     }
@@ -140,11 +152,5 @@ public class Vendedor {
 
     public void setDataCadastro(LocalDate dataCadastro) {
         this.dataCadastro = dataCadastro;
-    }
-
-    public int getId(){return Id;}
-
-    public void setId(int Id) {
-        this.Id = Id;
     }
 }
