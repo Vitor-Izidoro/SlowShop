@@ -21,3 +21,6 @@ só pode visualizar e editar seus próprios dados.</br></br>
 
 
 foco: começar a integrar com o banco e verificar os testes, e não deixar o jabur usar tanto gpt
+
+
+

@@ -1,5 +1,6 @@
 package dao;
 
+import models.Cliente;
 import models.Vendedor;
 
 import java.sql.*;
@@ -131,6 +132,7 @@ public class VendedorDAO {
 
     public Vendedor buscarVendedorPorEmail(String email) {
         this.query = "SELECT * FROM vendedor WHERE email = ?";
+
         Vendedor vendedor = null;
 
         try (Connection conn = conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(this.query)) {
@@ -160,6 +162,32 @@ public class VendedorDAO {
         }
         return vendedor;
     }
+    public boolean editarVendedor(String email, Vendedor vendedor) {
+        this.query = "UPDATE vendedor SET nome = ?, sobrenome = ?, dataNascimento = ?, telefone = ?, cpf = ?, cidade = ?, estado = ?, pais = ?, endereco = ?, numero = ?, dataCadastro = ?, senha = ? WHERE email = ?";
+        try {
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            this.ps.setString(1, vendedor.getNome());
+            this.ps.setString(2, vendedor.getSobrenome());
+            this.ps.setDate(3, Date.valueOf(vendedor.getDataNascimento())); // Convertendo LocalDate para Date
+            this.ps.setString(4, vendedor.getTelefone());
+            this.ps.setString(5, vendedor.getCpf());
+            this.ps.setString(6, vendedor.getCidade());
+            this.ps.setString(7, vendedor.getEstado());
+            this.ps.setString(8, vendedor.getPais());
+            this.ps.setString(9, vendedor.getEndereco());
+            this.ps.setInt(10, vendedor.getNumero());
+            this.ps.setDate(11, Date.valueOf(vendedor.getDataCadastro())); // Convertendo LocalDate para Date
+            this.ps.setString(12, vendedor.getSenha());
+            this.ps.setString(13, email); // Utilize o email como critério de atualização
+            int rowsAffected = this.ps.executeUpdate();
+            this.ps.close();
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
 
 
 

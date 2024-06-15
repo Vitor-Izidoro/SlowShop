@@ -123,8 +123,11 @@ public class Main {
             System.out.println("(12) Deletar Fornecedor");
             System.out.println("(13) Deletar Produto");
             System.out.println("(14) Alterar Cliente");
-            System.out.println("(15) Registrar Compra");
-            System.out.println("(16) Sair");
+            System.out.println("(15) Alterar produto");
+            System.out.println("(16) Alterar fornecedor");
+            System.out.println("(17) Alterar Vendedor");
+            System.out.println("(18) Registrar Compra");
+            System.out.println("(19) Sair");
 
             if (sc.hasNextInt()) {
                 opcaoMenu = sc.nextInt();
@@ -350,8 +353,8 @@ public class Main {
                         }
                         break;
                     case 14:
-                        if (!isVendedor) {
-                            System.out.println("Acesso negado. Apenas vendedores podem editar clientes.");
+                        if (!isAdmin && !isVendedor) {
+                            System.out.println("Acesso negado. Apenas administradores e vendedores podem editar clientes.");
                             break;
                         }
                         System.out.println("Editar cliente");
@@ -395,8 +398,8 @@ public class Main {
                         }
                         break;
                     case 15:
-                        if (!isAdmin && !isVendedor) {
-                            System.out.println("Acesso negado. Apenas administradores e vendedores podem editar vendedores.");
+                        if (!isAdmin) {
+                            System.out.println("Acesso negado. Apenas administradores podem alterar produtos.");
                             break;
                         }
                         System.out.println("Editar produto");
@@ -425,52 +428,103 @@ public class Main {
                             System.out.println("Cliente não encontrado.");
                         }
                         break;
-//                    case 14:
-//                        if (!isAdmin) {
-//                            System.out.println("Acesso negado. Apenas administradores podem editar vendedores.");
-//                            break;
-//                        }
-//                        System.out.println("Editar vendedor");
-//                        System.out.print("Informe o email do vendedor que deseja editar: ");
-//                        String emailVendedorEditar = sc.nextLine();
-//                        if (clienteDAO.verificarCliente(emailClienteEditar, "")) {
-//                            System.out.print("Informe o novo nome: ");
-//                            String novoNome = sc.nextLine();
-//                            System.out.print("Informe o novo sobrenome: ");
-//                            String novoSobrenome = sc.nextLine();
-//                            System.out.print("Informe a nova data de nascimento (AAAA-MM-DD): ");
-//                            String novaDataNascimento = sc.nextLine();
-//                            System.out.print("Informe o novo telefone: ");
-//                            String novoTelefone = sc.nextLine();
-//                            System.out.print("Informe o novo CPF: ");
-//                            String novoCpf = sc.nextLine();
-//                            System.out.print("Informe a nova cidade: ");
-//                            String novaCidade = sc.nextLine();
-//                            System.out.print("Informe o novo estado: ");
-//                            String novoEstado = sc.nextLine();
-//                            System.out.print("Informe o novo país: ");
-//                            String novoPais = sc.nextLine();
-//                            System.out.print("Informe o novo endereço: ");
-//                            String novoEndereco = sc.nextLine();
-//                            System.out.print("Informe o novo número: ");
-//                            int novoNumero = sc.nextInt();
-//                            sc.nextLine(); // Consumir a quebra de linha
-//                            System.out.print("Informe a nova data de cadastro (AAAA-MM-DD): ");
-//                            String novaDataCadastro = sc.nextLine();
-//                            System.out.print("Informe a nova senha: ");
-//                            String novaSenha = sc.nextLine();
-//                            Cliente novocliente = new Cliente(novoNome, novoSobrenome, LocalDate.parse(novaDataNascimento), novoTelefone, novoCpf, novaCidade, novoEstado, novoPais, novoEndereco, novoNumero, LocalDate.parse(novaDataCadastro), emailClienteEditar, novaSenha);
-//                            boolean sucesso = clienteDAO.editarCliente(emailClienteEditar, novocliente);
-//                            if (sucesso) {
-//                                System.out.println("Cliente editado com sucesso!");
-//                            } else {
-//                                System.out.println("Erro ao editar cliente.");
-//                            }
-//                        } else {
-//                            System.out.println("Cliente não encontrado.");
-//                        }
-//                        break;
+                    case 16:
+                        if (!isAdmin && !isVendedor) {
+                            System.out.println("Acesso negado. Apenas administradores e vendedores podem editar fornecedores.");
+                            break;
+                        }
+                        System.out.println("Editar fornecedor");
+                        System.out.print("Informe o ID do fornecedor que deseja editar: ");
+                        int idFornecedorEditar = sc.nextInt();
+                        sc.nextLine(); // Consumir a quebra de linha
+                        FornecedorDAO fornecedorDAO1 = new FornecedorDAO();
+                        Fornecedor fornecedorExistente = fornecedorDAO.buscarFornecedorPorId(idFornecedorEditar);
+                        if (fornecedorExistente != null) {
+                            System.out.print("Informe o novo nome fantasia: ");
+                            String novoNomeFantasia = sc.nextLine();
+                            System.out.print("Informe a nova razão social: ");
+                            String novaRazaoSocial = sc.nextLine();
+                            System.out.print("Informe o novo CNPJ: ");
+                            String novoCnpj = sc.nextLine();
+                            System.out.print("Informe o novo telefone: ");
+                            String novoTelefone = sc.nextLine();
+                            System.out.print("Informe a nova cidade: ");
+                            String novaCidade = sc.nextLine();
+                            System.out.print("Informe o novo estado: ");
+                            String novoEstado = sc.nextLine();
+                            System.out.print("Informe o novo país: ");
+                            String novoPais = sc.nextLine();
+                            System.out.print("Informe o novo endereço: ");
+                            String novoEndereco = sc.nextLine();
+                            System.out.print("Informe o novo número: ");
+                            String novoNumero = sc.nextLine();
+                            System.out.print("Informe a nova data de cadastro (AAAA-MM-DD): ");
+                            String novaDataCadastro = sc.nextLine();
+                            System.out.print("Informe a nova senha: ");
+                            String novaSenha = sc.nextLine();
+
+                            Fornecedor novoFornecedor = new Fornecedor(novoNomeFantasia, novaRazaoSocial, novoCnpj, fornecedorExistente.getEmail(), novoTelefone, novaCidade, novoEstado, novoPais, novoEndereco, novoNumero, LocalDate.parse(novaDataCadastro), novaSenha);
+                            boolean sucesso = fornecedorDAO.editarFornecedor(idFornecedorEditar, novoFornecedor);
+                            if (sucesso) {
+                                System.out.println("Fornecedor editado com sucesso!");
+                            } else {
+                                System.out.println("Erro ao editar fornecedor.");
+                            }
+                        } else {
+                            System.out.println("Fornecedor não encontrado.");
+                        }
+                        break;
+
+
                     case 17:
+                        if (!isAdmin) {
+                            System.out.println("Acesso negado. Apenas administradores podem editar vendedores.");
+                            break;
+                        }
+                        System.out.println("Editar vendedor");
+                        System.out.print("Informe o email do vendedor que deseja editar: ");
+                        String emailVendedorEditar = sc.nextLine();
+                       if (vendedorDAO.verificarVendedor(emailVendedorEditar, "")) {
+                            System.out.print("Informe o novo nome: ");
+                            String novoNome = sc.nextLine();
+                            System.out.print("Informe o novo sobrenome: ");
+                            String novoSobrenome = sc.nextLine();
+                            System.out.print("Informe a nova data de nascimento (AAAA-MM-DD): ");
+                            String novaDataNascimento = sc.nextLine();
+                            System.out.print("Informe o novo telefone: ");
+                            String novoTelefone = sc.nextLine();
+                            System.out.print("Informe o novo CPF: ");
+                            String novoCpf = sc.nextLine();
+                            System.out.print("Informe a nova cidade: ");
+                            String novaCidade = sc.nextLine();
+                            System.out.print("Informe o novo estado: ");
+                            String novoEstado = sc.nextLine();
+                            System.out.print("Informe o novo país: ");
+                            String novoPais = sc.nextLine();
+                            System.out.print("Informe o novo endereço: ");
+                            String novoEndereco = sc.nextLine();
+                            System.out.print("Informe o novo número: ");
+                            int novoNumero = sc.nextInt();
+                            sc.nextLine(); // Consumir a quebra de linha
+                            System.out.print("Informe a nova data de cadastro (AAAA-MM-DD): ");
+                            String novaDataCadastro = sc.nextLine();
+                            System.out.print("Informe a nova senha: ");
+                            String novaSenha = sc.nextLine();
+                            Vendedor novoVendedor = new Vendedor(novoNome, novoSobrenome, LocalDate.parse(novaDataNascimento), novoTelefone, novoCpf, novaCidade, novoEstado, novoPais, novoEndereco, novoNumero, LocalDate.parse(novaDataCadastro), emailVendedorEditar, novaSenha);
+                           boolean sucesso = vendedorDAO.editarVendedor(emailVendedorEditar, novoVendedor);
+                            if (sucesso) {
+                                System.out.println("vendedor editado com sucesso!");
+                            } else {
+                                System.out.println("Erro ao editar vendedor.");
+                            }
+                        } else {
+                            System.out.println("vendedor não encontrado.");
+                        }
+                        break;
+
+
+
+                    case 18:
                         if (!isVendedor) {
                             System.out.println("Acesso negado. Apenas vendedores podem registrar vendas.");
                             break;
@@ -535,7 +589,7 @@ public class Main {
 
 
 
-                    case 18:
+                    case 19:
                         System.out.println("Saindo...");
                         sc.close();
                         System.exit(0);

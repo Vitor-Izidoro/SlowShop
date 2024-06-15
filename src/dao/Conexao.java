@@ -15,8 +15,8 @@ public class Conexao {
 
     private Conexao() {
         this.bdUsuario = "root";
-        this.bdSenha = "Garfield12";
-        this.bdHost = "jdbc:mysql://127.0.0.1:3307/slowshop?useSSL=false";
+        this.bdSenha = "C0x1nh4123";
+        this.bdHost = "jdbc:mysql://127.0.0.1:3306/slowshop?useSSL=false";
         conectar();
     }
 

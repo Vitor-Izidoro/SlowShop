@@ -89,4 +89,59 @@ public class FornecedorDAO {
         }
         return fornecedores;
     }
+
+    public boolean editarFornecedor(int id, Fornecedor fornecedor) {
+        String query = "UPDATE fornecedor SET nomeFantasia = ?, razaoSocial = ?, cnpj = ?, telefone = ?, cidade = ?, estado = ?, pais = ?, endereco = ?, numero = ?, dataCadastro = ?, senha = ? WHERE id_fornecedor = ?";
+        try (Connection conn = conexao.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+
+            ps.setString(1, fornecedor.getNomeFantasia());
+            ps.setString(2, fornecedor.getRazaoSocial());
+            ps.setString(3, fornecedor.getCnpj());
+            ps.setString(4, fornecedor.getTelefone());
+            ps.setString(5, fornecedor.getCidade());
+            ps.setString(6, fornecedor.getEstado());
+            ps.setString(7, fornecedor.getPais());
+            ps.setString(8, fornecedor.getEndereco());
+            ps.setString(9, fornecedor.getNumero());
+            ps.setDate(10, Date.valueOf(fornecedor.getDataCadastro()));
+            ps.setString(11, fornecedor.getSenha());
+            ps.setInt(12, id);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace(); // Melhor substituir por um log apropriado
+            return false;
+        }
+    }
+
+    public Fornecedor buscarFornecedorPorId(int id) {
+        String query = "SELECT * FROM fornecedor WHERE id_fornecedor = ?";
+        try (Connection conn = conexao.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Fornecedor(
+                            rs.getString("nomeFantasia"),
+                            rs.getString("razaoSocial"),
+                            rs.getString("cnpj"),
+                            rs.getString("email"),
+                            rs.getString("telefone"),
+                            rs.getString("cidade"),
+                            rs.getString("estado"),
+                            rs.getString("pais"),
+                            rs.getString("endereco"),
+                            rs.getString("numero"),
+                            rs.getDate("dataCadastro").toLocalDate(),
+                            rs.getString("senha")
+                    );
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(); // Melhor substituir por um log apropriado
+        }
+        return null; // Fornecedor não encontrado
+    }
 }
