@@ -7,6 +7,18 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.List;
 import java.util.ArrayList;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Scanner;
+import dao.*;
+import models.*;
+
+import java.time.LocalDate;
+import java.util.Scanner;
+import java.util.List;
 
 public class Main {
     private static boolean isAdmin = false;
@@ -61,6 +73,20 @@ public class Main {
         }
     }
 
+    private static void listarProdutos(ProdutoDAO produtoDAO) {
+        List<Produto> produtos = produtoDAO.listarProdutos();
+        for (Produto produto : produtos) {
+            System.out.println(
+                    "ID: " + produto.getId_produto() + "\n" +
+                            "Descrição: " + produto.getDescricao() + "\n" +
+                            "Quantidade: " + produto.getQuantidade() + "\n" +
+                            "Preço: " + produto.getPreco() + "\n" +
+                            "ID do Fornecedor: " + produto.getFornecedorId() + "\n"
+            );
+            System.out.println("-----------------------------------");
+        }
+    }
+
     private static void listarFornecedor(FornecedorDAO fornecedorDAO) {
         List<Fornecedor> fornecedores = fornecedorDAO.listarFornecedores();
         for (Fornecedor fornecedor : fornecedores) {
@@ -78,6 +104,55 @@ public class Main {
                             "Data de Cadastro: " + fornecedor.getDataCadastro() + "\n"
             );
             System.out.println("-----------------------------------");
+        }
+    }
+
+    private static void alterarVendedor(VendedorDAO vendedorDAO, String emailVendedorEditar) {
+        Scanner sc = new Scanner(System.in);
+
+        if (!isAdmin && !emailVendedorEditar.equals(loggedInEmail)) {
+            System.out.println("Acesso negado. Você só pode editar seus próprios dados.");
+            return;
+        }
+
+        Vendedor vendedor = vendedorDAO.buscarVendedorPorEmail(emailVendedorEditar);
+        if (vendedor == null) {
+            System.out.println("Vendedor não encontrado.");
+            return;
+        }
+
+        System.out.print("Informe o novo nome: ");
+        String novoNome = sc.nextLine();
+        System.out.print("Informe o novo sobrenome: ");
+        String novoSobrenome = sc.nextLine();
+        System.out.print("Informe a nova data de nascimento (AAAA-MM-DD): ");
+        String novaDataNascimento = sc.nextLine();
+        System.out.print("Informe o novo telefone: ");
+        String novoTelefone = sc.nextLine();
+        System.out.print("Informe o novo CPF: ");
+        String novoCpf = sc.nextLine();
+        System.out.print("Informe a nova cidade: ");
+        String novaCidade = sc.nextLine();
+        System.out.print("Informe o novo estado: ");
+        String novoEstado = sc.nextLine();
+        System.out.print("Informe o novo país: ");
+        String novoPais = sc.nextLine();
+        System.out.print("Informe o novo endereço: ");
+        String novoEndereco = sc.nextLine();
+        System.out.print("Informe o novo número: ");
+        int novoNumero = sc.nextInt();
+        sc.nextLine(); // Consumir a quebra de linha
+        System.out.print("Informe a nova data de cadastro (AAAA-MM-DD): ");
+        String novaDataCadastro = sc.nextLine();
+        System.out.print("Informe a nova senha: ");
+        String novaSenha = sc.nextLine();
+
+        Vendedor novoVendedor = new Vendedor(vendedor.getId(), novoNome, novoSobrenome, LocalDate.parse(novaDataNascimento), novoTelefone, novoCpf, novaCidade, novoEstado, novoPais, novoEndereco, novoNumero, LocalDate.parse(novaDataCadastro), emailVendedorEditar, novaSenha);
+        boolean sucesso = vendedorDAO.editarVendedor(emailVendedorEditar, novoVendedor);
+        if (sucesso) {
+            System.out.println("Vendedor editado com sucesso!");
+        } else {
+            System.out.println("Erro ao editar vendedor.");
         }
     }
 
@@ -127,7 +202,8 @@ public class Main {
             System.out.println("(16) Alterar fornecedor");
             System.out.println("(17) Alterar Vendedor");
             System.out.println("(18) Registrar Compra");
-            System.out.println("(19) Sair");
+            System.out.println("(19) Fechamento do dia");
+            System.out.println("(20) Sair");
 
             if (sc.hasNextInt()) {
                 opcaoMenu = sc.nextInt();
@@ -294,7 +370,7 @@ public class Main {
                         listarFornecedor(fornecedorDAO);
                         break;
                     case 9:
-                        //listarProdutos();
+                        listarProdutos(produtoDAO);
                         break;
                     case 10:
                         if (!isAdmin && !isVendedor) {
@@ -477,48 +553,16 @@ public class Main {
 
 
                     case 17:
-                        if (!isAdmin) {
-                            System.out.println("Acesso negado. Apenas administradores podem editar vendedores.");
-                            break;
-                        }
-                        System.out.println("Editar vendedor");
-                        System.out.print("Informe o email do vendedor que deseja editar: ");
-                        String emailVendedorEditar = sc.nextLine();
-                       if (vendedorDAO.verificarVendedor(emailVendedorEditar, "")) {
-                            System.out.print("Informe o novo nome: ");
-                            String novoNome = sc.nextLine();
-                            System.out.print("Informe o novo sobrenome: ");
-                            String novoSobrenome = sc.nextLine();
-                            System.out.print("Informe a nova data de nascimento (AAAA-MM-DD): ");
-                            String novaDataNascimento = sc.nextLine();
-                            System.out.print("Informe o novo telefone: ");
-                            String novoTelefone = sc.nextLine();
-                            System.out.print("Informe o novo CPF: ");
-                            String novoCpf = sc.nextLine();
-                            System.out.print("Informe a nova cidade: ");
-                            String novaCidade = sc.nextLine();
-                            System.out.print("Informe o novo estado: ");
-                            String novoEstado = sc.nextLine();
-                            System.out.print("Informe o novo país: ");
-                            String novoPais = sc.nextLine();
-                            System.out.print("Informe o novo endereço: ");
-                            String novoEndereco = sc.nextLine();
-                            System.out.print("Informe o novo número: ");
-                            int novoNumero = sc.nextInt();
-                            sc.nextLine(); // Consumir a quebra de linha
-                            System.out.print("Informe a nova data de cadastro (AAAA-MM-DD): ");
-                            String novaDataCadastro = sc.nextLine();
-                            System.out.print("Informe a nova senha: ");
-                            String novaSenha = sc.nextLine();
-                            Vendedor novoVendedor = new Vendedor(novoNome, novoSobrenome, LocalDate.parse(novaDataNascimento), novoTelefone, novoCpf, novaCidade, novoEstado, novoPais, novoEndereco, novoNumero, LocalDate.parse(novaDataCadastro), emailVendedorEditar, novaSenha);
-                           boolean sucesso = vendedorDAO.editarVendedor(emailVendedorEditar, novoVendedor);
-                            if (sucesso) {
-                                System.out.println("vendedor editado com sucesso!");
-                            } else {
-                                System.out.println("Erro ao editar vendedor.");
-                            }
+                        if (isAdmin) {
+                            System.out.println("Editar vendedor (Administrador)");
+                            System.out.print("Informe o email do vendedor que deseja editar: ");
+                            String emailVendedorEditar = sc.nextLine();
+                            alterarVendedor(vendedorDAO, emailVendedorEditar);
+                        } else if (isVendedor) {
+                            System.out.println("Editar seus próprios dados (Vendedor)");
+                            alterarVendedor(vendedorDAO, loggedInEmail);
                         } else {
-                            System.out.println("vendedor não encontrado.");
+                            System.out.println("Acesso negado. Apenas vendedores ou administradores podem editar vendedores.");
                         }
                         break;
 
@@ -531,33 +575,33 @@ public class Main {
                         }
                         System.out.println("Registrar Venda:");
 
-// Solicitar ID do Cliente
+                        // Solicitar ID do Cliente
                         System.out.print("ID do Cliente: ");
                         int clienteId = sc.nextInt();
                         sc.nextLine(); // Consumir a quebra de linha
 
-// Solicitar ID do Produto
+                        // Solicitar ID do Produto
                         System.out.print("ID do Produto: ");
                         int produtoId = sc.nextInt();
                         sc.nextLine(); // Consumir a quebra de linha
 
-// Solicitar quantidade do produto
+                        // Solicitar quantidade do produto
                         System.out.print("Quantidade: ");
                         int vendaquantidade = sc.nextInt();
                         sc.nextLine(); // Consumir a quebra de linha
 
-// Buscar o produto para obter o preço
+                        // Buscar o produto para obter o preço
                         Produto vendaproduto = produtoDAO.buscarProdutoPorId(produtoId);
                         if (vendaproduto == null || vendaproduto.getQuantidade() < vendaquantidade) {
                             System.out.println("Produto não encontrado ou quantidade insuficiente em estoque.");
                             break;
                         }
 
-// Calcular o total da compra
+                        // Calcular o total da compra
                         double precoProduto = vendaproduto.getPreco();
                         double total = precoProduto * vendaquantidade;
 
-// Solicitar tipo de pagamento
+                        // Solicitar tipo de pagamento
                         System.out.println("Tipo de Pagamento:");
                         System.out.println("(1) Crédito");
                         System.out.println("(2) Débito");
@@ -569,14 +613,14 @@ public class Main {
                             parcelas = sc.nextInt();
                         }
 
-// Obter o ID do vendedor logado
+                        // Obter o ID do vendedor logado
                         int vendedorId = vendedorDAO.getVendedorLogado().getId();
 
-// Registrar a venda no banco de dados
+                        // Registrar a venda no banco de dados
                         Vendas venda = new Vendas(0, clienteId, vendedorId, java.time.LocalDate.now().toString(), tipoPagamento, parcelas, total);
                         vendasDAO.inserirVenda(venda);
 
-// Atualizar a quantidade do produto no estoque
+                        // Atualizar a quantidade do produto no estoque
                         int novaQuantidade = vendaproduto.getQuantidade() - vendaquantidade;
                         boolean atualizado = produtoDAO.atualizarQuantidadeProduto(produtoId, novaQuantidade);
                         if (atualizado) {
@@ -586,10 +630,43 @@ public class Main {
                         }
                         break;
 
-
-
-
                     case 19:
+                        if (!isAdmin && !isVendedor) {
+                            System.out.println("Acesso negado. Apenas administradores e vendedores podem acessar o fechamento do dia.");
+                            break;
+                        }
+
+                        LocalDate today = LocalDate.now();
+                        double totalDinheiro = 0;
+                        double totalDebito = 0;
+
+                        try (Connection conn = Conexao.getConexao().getConnection()) {
+                            String query = "SELECT pagamento, total FROM vendas WHERE DATE(data) = ?";
+                            try (PreparedStatement ps = conn.prepareStatement(query)) {
+                                ps.setDate(1, java.sql.Date.valueOf(today));
+                                try (ResultSet rs = ps.executeQuery()) {
+                                    while (rs.next()) {
+                                        int pagamento = rs.getInt("pagamento");
+                                        double valorTotal = rs.getDouble("total");
+                                        if (pagamento == 2) { // Débito
+                                            totalDebito += valorTotal;
+                                        } else if (pagamento == 3) { // Dinheiro
+                                            totalDinheiro += valorTotal;
+                                        }
+                                    }
+                                }
+                            }
+                        } catch (SQLException ex) {
+                            ex.printStackTrace();
+                        }
+
+                        System.out.println("Fechamento do Dia:");
+                        System.out.println("Total em Dinheiro: R$ " + totalDinheiro);
+                        System.out.println("Total em Débito: R$ " + totalDebito);
+                        break;
+
+
+                    case 20:
                         System.out.println("Saindo...");
                         sc.close();
                         System.exit(0);

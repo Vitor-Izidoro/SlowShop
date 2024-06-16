@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProdutoDAO {
     private Conexao conexao;
@@ -79,18 +81,17 @@ public class ProdutoDAO {
         return produto;
     }
 
-
-    public boolean verificarProduto(int id, String senha)  {
+    public boolean verificarProduto(int id, String senha) {
         this.query = "SELECT * FROM pessoa WHERE email = ?";
         try (Connection conn = conexao.getConnection();
              PreparedStatement ps = conn.prepareStatement(this.query)) {
             ps.setString(1, String.valueOf(id));
             try (ResultSet rs = ps.executeQuery()) {
-                return rs.next(); // Verifica se há resultados
+                return rs.next();
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            return false; // Cliente não encontrado
+            return false;
         }
     }
 
@@ -121,7 +122,6 @@ public class ProdutoDAO {
         return rowsAffected > 0;
     }
 
-    // Método para atualizar a quantidade do produto
     public boolean atualizarQuantidadeProduto(int id_produto, int novaQuantidade) {
         this.query = "UPDATE produto SET quantidade = ? WHERE id_produto = ?";
         try (Connection conn = conexao.getConnection(); PreparedStatement ps = conn.prepareStatement(this.query)) {
@@ -134,5 +134,28 @@ public class ProdutoDAO {
             return false;
         }
     }
-}
 
+    public List<Produto> listarProdutos() {
+        List<Produto> produtos = new ArrayList<>();
+        this.query = "SELECT * FROM produto";
+        try {
+            this.ps = conexao.getConnection().prepareStatement(this.query);
+            ResultSet rs = this.ps.executeQuery();
+            while (rs.next()) {
+                Produto produto = new Produto(
+                        rs.getInt("id_produto"),
+                        rs.getString("descricao"),
+                        rs.getInt("quantidade"),
+                        rs.getDouble("preco"),
+                        rs.getInt("id_fornecedor")
+                );
+                produtos.add(produto);
+            }
+            rs.close();
+            this.ps.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return produtos;
+    }
+}
